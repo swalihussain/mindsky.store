@@ -1,9 +1,17 @@
 "use client";
 
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useCmsStore } from '@/store/cmsStore';
 
 export default function PromoBanner() {
+  const cmsData = useCmsStore((state) => state.data.promo);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -14,6 +22,8 @@ export default function PromoBanner() {
   const objectRotate1 = useTransform(scrollYProgress, [0, 1], [0, 360]);
   const objectRotate2 = useTransform(scrollYProgress, [0, 1], [360, 0]);
   const objectScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.2, 0.8]);
+
+  if (!mounted) return null;
 
   return (
     <section ref={ref} className="py-24 px-4 overflow-hidden bg-[#FFD966] relative rounded-[4rem] mx-2 sm:mx-6 shadow-md border-b-[8px] border-[#d4a200]">
@@ -30,20 +40,15 @@ export default function PromoBanner() {
           transition={{ type: "spring", stiffness: 100 }}
           className="bg-white inline-block px-6 py-2 rounded-full text-amber-600 font-bold mb-8 shadow-sm transform -rotate-2"
         >
-          ✨ Limited Time Offer
+          ✨ {cmsData.highlight}
         </motion.div>
         
         <h2 className="text-5xl md:text-7xl font-heading font-black text-gray-900 mb-8 leading-[1.1] drop-shadow-sm">
-          Where Learning Meets <span className="text-white drop-shadow-md relative inline-block">
-            Fun!
-            <svg className="absolute w-full h-4 -bottom-1 left-0 text-white" viewBox="0 0 100 20" preserveAspectRatio="none">
-              <path d="M0,10 C30,20 70,0 100,10" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-            </svg>
-          </span>
+          {cmsData.title}
         </h2>
         
         <p className="text-xl md:text-2xl text-amber-900 max-w-2xl mx-auto mb-10 font-medium">
-          Get 20% off on all educational toys this weekend. Fuel their imagination today!
+          {cmsData.subtitle}
         </p>
 
         <motion.button 
@@ -51,7 +56,7 @@ export default function PromoBanner() {
           whileTap={{ scale: 0.95 }}
           className="bg-gray-900 text-white font-bold text-xl py-5 px-12 rounded-full shadow-[0_6px_0_#333333] hover:shadow-[0_4px_0_#333333] hover:translate-y-[2px] transition-all"
         >
-          Claim Offer Now
+          {cmsData.btnText}
         </motion.button>
       </div>
 

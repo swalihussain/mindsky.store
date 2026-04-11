@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ShoppingBag, Users, Settings, Package, Tag, CreditCard, LogOut } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Users, Settings, Package, Tag, CreditCard, LogOut, FileText } from 'lucide-react';
 
 export default function AdminLayout({
   children,
@@ -34,6 +34,9 @@ export default function AdminLayout({
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
           <Link href="/admin" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${pathname === '/admin' ? 'bg-[#4DA6FF] text-white shadow-[0_4px_0_#2b82d4] -translate-y-[1px]' : 'text-gray-600 hover:bg-gray-50'}`}>
             <LayoutDashboard size={20} /> Dashboard
+          </Link>
+          <Link href="/admin/cms" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${pathname === '/admin/cms' ? 'bg-[#4DA6FF] text-white shadow-[0_4px_0_#2b82d4] -translate-y-[1px]' : 'text-gray-600 hover:bg-gray-50'}`}>
+            <FileText size={20} /> Home Editor
           </Link>
           <Link href="/admin/products" className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all ${pathname.includes('/products') ? 'bg-[#4DA6FF] text-white shadow-[0_4px_0_#2b82d4] -translate-y-[1px]' : 'text-gray-600 hover:bg-gray-50'}`}>
             <Package size={20} /> Products

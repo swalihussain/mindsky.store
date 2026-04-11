@@ -3,6 +3,8 @@
   "css.validate": false,
   "scss.lint.unknownAtRules": "ignore",
   "less.lint.unknownAtRules": "ignore",
+  "tailwindCSS.lint.invalidAtRules": "ignore",
+  "postcss.validate": false,
   "files.associations": {
     "*.css": "tailwindcss"
   }

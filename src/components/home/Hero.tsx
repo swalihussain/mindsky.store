@@ -2,8 +2,19 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useCmsStore } from '@/store/cmsStore';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
+  const cmsData = useCmsStore((state) => state.data.hero);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#E6F3FF] via-[#ffffff] to-[#FFf8e1] pt-20 pb-12">
       
@@ -51,7 +62,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-block px-6 py-2 rounded-full bg-white shadow-xl shadow-blue-100/50 text-[#4DA6FF] font-black text-sm mb-8 border-2 border-dashed border-[#4DA6FF] animate-pulse"
         >
-          🎁 SPECIAL: 20% OFF ALL SUMMER TOYS!
+          {cmsData.offerText}
         </motion.div>
         
         {/* Logo / Tagline */}
@@ -61,7 +72,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="text-5xl md:text-7xl font-heading font-black text-gray-800 leading-tight mb-6 drop-shadow-sm tracking-tight"
         >
-          Fun, Fashion & <span className="text-[#4DA6FF]">Learning</span> <br className="hidden md:block"/> for Every Kid
+          {cmsData.title}
         </motion.h1>
         
         <motion.p 
@@ -70,7 +81,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xl md:text-2xl text-gray-600 mb-12 font-medium max-w-2xl mx-auto"
         >
-          Discover play-tested, parent-approved gear from toys to trendy clothing at MindSky.store!
+          {cmsData.subtitle}
         </motion.p>
         
         {/* Animated Buttons */}
@@ -86,7 +97,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
               className="bg-[#4DA6FF] text-white font-black text-xl py-5 px-10 rounded-full shadow-[0_8px_0_#2b82d4] hover:shadow-[0_4px_0_#2b82d4] transition-all flex items-center gap-3 w-full sm:w-auto"
             >
-              🛒 Shop Now
+              {cmsData.primaryBtnText}
             </motion.button>
           </Link>
           <Link href="/offers">
@@ -95,7 +106,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
               className="bg-white border-2 border-gray-200 text-gray-800 font-black text-xl py-5 px-10 rounded-full shadow-[0_8px_0_#e5e7eb] hover:shadow-[0_4px_0_#e5e7eb] hover:border-[#FFD966] transition-all flex items-center gap-3 w-full sm:w-auto"
             >
-              🎁 Explore Offers
+              {cmsData.secondaryBtnText}
             </motion.button>
           </Link>
         </motion.div>
