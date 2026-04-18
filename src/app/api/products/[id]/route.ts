@@ -3,17 +3,13 @@ import { readDB, writeDB } from '@/lib/db';
 
 export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
-    // In Next.js 15+, params is a promise and must be awaited
     const { id: idParam } = await context.params;
     const body = await request.json();
-
-    console.log("SERVER: Received PUT request for ID:", idParam);
 
     const db = readDB();
     const productIndex = db.products.findIndex(p => (p?.id || "").toString() === (idParam || "").toString());
     
     if (productIndex === -1) {
-       console.error("SERVER: Product NOT FOUND for ID:", idParam);
        return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
     }
 
@@ -44,7 +40,6 @@ export async function DELETE(request: Request, context: { params: Promise<{ id: 
   try {
     // In Next.js 15+, params is a promise and must be awaited
     const { id: idParam } = await context.params;
-    console.log("SERVER: Received DELETE request for ID:", idParam);
     
     const db = readDB();
     const initialLength = db.products.length;
