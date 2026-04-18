@@ -4,6 +4,7 @@
   "scss.lint.unknownAtRules": "ignore",
   "less.lint.unknownAtRules": "ignore",
   "tailwindCSS.lint.invalidAtRules": "ignore",
+  "tailwindCSS.lint.unknownAtRules": "ignore",
   "postcss.validate": false,
   "files.associations": {
     "*.css": "tailwindcss"

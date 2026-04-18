@@ -1,0 +1,197 @@
+{
+  "products": [
+    {
+      "id": "1vxmca16h",
+      "product_name": "Spider Man",
+      "category_id": "Board Games",
+      "brand_id": "",
+      "description": "",
+      "price": 599,
+      "discount_price": 499,
+      "stock": 10,
+      "image_url": "/uploads/upload_1776509136614_154.jpg",
+      "age_group": "",
+      "sku": "SKU-9249",
+      "status": "Active",
+      "created_at": "2026-04-18T10:46:22.461Z",
+      "name": "Spider Man",
+      "category": "Toys",
+      "brand": "",
+      "discountPrice": "499",
+      "imageUrl": "/uploads/upload_1776509136614_154.jpg",
+      "ageGroup": ""
+    },
+    {
+      "id": "9yyqf7vz8",
+      "product_name": "Book",
+      "category_id": "Educational Toys",
+      "brand_id": "",
+      "description": "",
+      "price": 199,
+      "discount_price": 40,
+      "stock": 9,
+      "image_url": "/uploads/upload_1776509831286_937.png",
+      "age_group": "",
+      "sku": "SKU-4722",
+      "status": "Active",
+      "created_at": "2026-04-18T10:57:31.500Z",
+      "name": "Book",
+      "category": "Education",
+      "brand": "",
+      "discountPrice": "99",
+      "imageUrl": "/uploads/upload_1776509831286_937.png",
+      "ageGroup": ""
+    }
+  ],
+  "categories": [
+    {
+      "id": 1776512081614,
+      "name": "Education",
+      "description": "",
+      "imageUrl": "/uploads/upload_1776512225406_374.png",
+      "parent": "None",
+      "createdAt": "2026-04-18T11:34:41.614Z"
+    },
+    {
+      "id": 1776523168405,
+      "name": "Toys",
+      "description": "",
+      "imageUrl": "/uploads/upload_1776523167342_161.png",
+      "parent": "None",
+      "createdAt": "2026-04-18T14:39:28.405Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-1776527585253",
+      "invoice_id": "INV-20260418-4930",
+      "customer_name": "csc scscasc",
+      "customer_phone": "sczczsc",
+      "customer_email": "mohdswalihbp128@gmail.com",
+      "address": "UPPUVALAPPIL, KANNUR, 670581",
+      "items": [
+        {
+          "name": "Spider Man",
+          "quantity": 1,
+          "price": 499
+        }
+      ],
+      "subtotal": 278.8,
+      "shipping": 99,
+      "discount": 0,
+      "tax": 62.73,
+      "total": 348.5,
+      "payment_status": "Paid",
+      "order_status": "Pending",
+      "created_at": "2026-04-18T15:53:05.253Z"
+    },
+    {
+      "id": "ORD-1776514515958",
+      "invoice_id": "INV-20260418-1001",
+      "customer_name": "Swalih Hussain",
+      "customer_phone": "+91 95444 88812",
+      "address": "MindSky Towers, Floor 4, Suite 202, Calicut, Kerala",
+      "items": [
+        {
+          "name": "Magic Building Blocks",
+          "quantity": 2,
+          "price": 1500
+        }
+      ],
+      "subtotal": 3000,
+      "shipping": 99,
+      "discount": 300,
+      "tax": 540,
+      "total": 3339,
+      "payment_status": "Paid",
+      "order_status": "Delivered",
+      "created_at": "2026-04-18T10:00:00Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1776527585253,
+      "name": "csc scscasc",
+      "email": "mohdswalihbp128@gmail.com",
+      "phone": "sczczsc",
+      "address": "UPPUVALAPPIL, KANNUR, 670581",
+      "total_orders": 1,
+      "total_spend": 348.5,
+      "created_at": "2026-04-18T15:53:05.253Z"
+    }
+  ],
+  "cms": {
+    "hero_title": "Fun, Fashion & Learning for Every Kid",
+    "hero_subtitle": "Discover play-tested, parent-approved gear.",
+    "hero_button_text": "Shop Now"
+  },
+  "reviews": [
+    {
+      "id": 1776515978890,
+      "user": "Swalihussain",
+      "product": "Global Store",
+      "text": "Good service, thank you mindsky",
+      "rating": 5,
+      "status": "Approved",
+      "createdAt": "2026-04-18T12:39:38.890Z"
+    }
+  ],
+  "offers": [
+    {
+      "id": 1776513688440,
+      "code": "MINDSKY",
+      "discount": "50",
+      "type": "percentage",
+      "status": "Active",
+      "usageCount": 0,
+      "createdAt": "2026-04-18T12:01:28.440Z"
+    }
+  ],
+  "banners": [
+    {
+      "id": 1776515361350,
+      "title": "Super Spider",
+      "imageUrl": "/uploads/upload_1776515346072_316.jpg",
+      "link": "#",
+      "isActive": true,
+      "createdAt": "2026-04-18T12:29:21.350Z"
+    }
+  ],
+  "learn_play": {
+    "fun_facts": [
+      {
+        "id": 1,
+        "title": "Fun Fact of the Day!",
+        "text": "Did you know that octopuses have three hearts? Two pump blood to the gills, and one pumps it to the rest of the body!",
+        "icon": "Lightbulb",
+        "isActive": true
+      }
+    ],
+    "parenting_tips": [
+      {
+        "id": 1,
+        "title": "Parenting Tip",
+        "text": "Encourage 15 minutes of unstructured imaginative play every day to boost your child's creative problem-solving skills.",
+        "icon": "Award",
+        "isActive": true
+      }
+    ],
+    "printables": [
+      {
+        "id": 1,
+        "title": "Free Printable",
+        "description": "Download our weekly math challenge worksheet! Perfect for ages 5-8.",
+        "file_url": "/printables/math-challenge.pdf",
+        "btnText": "Download Now",
+        "downloads": 1,
+        "isActive": true
+      }
+    ]
+  },
+  "whatsapp_settings": {
+    "number": "+917907406034",
+    "default_message": "Hello, welcome to mindsky.shop.",
+    "button_text": "Order Now",
+    "enabled": true
+  }
+}

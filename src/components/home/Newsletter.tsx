@@ -6,7 +6,7 @@ import { Mail, ArrowRight } from 'lucide-react';
 export default function Newsletter() {
   return (
     <section className="py-24 px-4 bg-white relative">
-      <div className="max-w-6xl mx-auto rounded-[3rem] bg-gradient-to-br from-[#4DA6FF] to-[#80bdff] text-white overflow-hidden relative shadow-2xl">
+      <div className="max-w-6xl mx-auto rounded-[3rem] bg-gradient-to-br from-[#024fe7] to-[#80bdff] text-white overflow-hidden relative shadow-2xl">
         {/* Background bubbles */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-2xl translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 left-10 w-48 h-48 bg-blue-300 opacity-30 rounded-full blur-xl translate-y-1/2"></div>
@@ -30,13 +30,13 @@ export default function Newsletter() {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail size={18} className="text-gray-400" />
                   </div>
-                  <input type="email" placeholder="hello@example.com" className="w-full bg-gray-50 border-2 border-gray-100 text-gray-800 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-[#4DA6FF] transition-colors" required />
+                  <input type="email" placeholder="hello@example.com" className="w-full bg-gray-50 border-2 border-gray-100 text-gray-800 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-[#024fe7] transition-colors" required />
                 </div>
               </div>
               
               <div>
                 <label className="block text-gray-600 text-sm font-bold mb-2 ml-1">Child's Age Group (For personalized tips)</label>
-                <select className="w-full bg-gray-50 border-2 border-gray-100 text-gray-800 rounded-xl py-3 px-4 focus:outline-none focus:border-[#4DA6FF] transition-colors cursor-pointer appearance-none">
+                <select className="w-full bg-gray-50 border-2 border-gray-100 text-gray-800 rounded-xl py-3 px-4 focus:outline-none focus:border-[#024fe7] transition-colors cursor-pointer appearance-none">
                   <option value="">Select Age Group</option>
                   <option value="0-2">Baby / Toddler (0-2 years)</option>
                   <option value="3-5">Preschool (3-5 years)</option>

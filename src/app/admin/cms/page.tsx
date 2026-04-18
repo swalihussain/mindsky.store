@@ -61,7 +61,7 @@ export default function CmsEditor() {
         {/* Hero Section Editor */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-gray-50 bg-gray-50/50 flex items-center gap-3">
-            <Layout className="text-[#4DA6FF]" size={24} />
+            <Layout className="text-[#024fe7]" size={24} />
             <h3 className="font-heading font-bold text-xl text-gray-800">Hero Section</h3>
           </div>
           <div className="p-8 space-y-6">
@@ -72,7 +72,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={heroForm.offerText}
                   onChange={(e) => setHeroForm({...heroForm, offerText: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -81,7 +81,7 @@ export default function CmsEditor() {
                   rows={2}
                   value={heroForm.title}
                   onChange={(e) => setHeroForm({...heroForm, title: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -90,7 +90,7 @@ export default function CmsEditor() {
                   rows={3}
                   value={heroForm.subtitle}
                   onChange={(e) => setHeroForm({...heroForm, subtitle: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={heroForm.primaryBtnText}
                   onChange={(e) => setHeroForm({...heroForm, primaryBtnText: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div>
@@ -108,7 +108,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={heroForm.secondaryBtnText}
                   onChange={(e) => setHeroForm({...heroForm, secondaryBtnText: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function CmsEditor() {
               <button 
                 onClick={handleSaveHero}
                 disabled={isSaving}
-                className="flex items-center gap-2 bg-[#4DA6FF] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#3d95eb] transition-colors shadow-lg shadow-blue-100 disabled:opacity-50"
+                className="flex items-center gap-2 bg-[#024fe7] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#3d95eb] transition-colors shadow-lg shadow-blue-100 disabled:opacity-50"
               >
                 {isSaving ? <RefreshCw className="animate-spin" size={20} /> : <Save size={20} />}
                 Update Hero Section
@@ -139,7 +139,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={promoForm.highlight}
                   onChange={(e) => setPromoForm({...promoForm, highlight: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div>
@@ -148,7 +148,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={promoForm.btnText}
                   onChange={(e) => setPromoForm({...promoForm, btnText: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -157,7 +157,7 @@ export default function CmsEditor() {
                   type="text" 
                   value={promoForm.title}
                   onChange={(e) => setPromoForm({...promoForm, title: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -166,7 +166,7 @@ export default function CmsEditor() {
                   rows={2}
                   value={promoForm.subtitle}
                   onChange={(e) => setPromoForm({...promoForm, subtitle: e.target.value})}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4DA6FF] focus:ring-2 focus:ring-[#4DA6FF]/20 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#024fe7] focus:ring-2 focus:ring-[#024fe7]/20 outline-none transition-all"
                 />
               </div>
             </div>

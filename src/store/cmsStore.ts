@@ -1,55 +1,57 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 interface CmsData {
-  hero: {
-    offerText: string;
-    title: string;
-    subtitle: string;
-    primaryBtnText: string;
-    secondaryBtnText: string;
-  };
+  hero_title: string;
+  hero_subtitle: string;
+  hero_button_text: string;
+  hero_link: string;
+  footer_description: string;
   promo: {
+    highlight: string;
     title: string;
     subtitle: string;
     btnText: string;
-    highlight: string;
-  };
+  }
 }
 
 interface CmsState {
   data: CmsData;
-  updateHero: (hero: Partial<CmsData['hero']>) => void;
-  updatePromo: (promo: Partial<CmsData['promo']>) => void;
+  isLoading: boolean;
+  fetchCMS: () => Promise<void>;
+  updateCMS: (data: Partial<CmsData>) => void;
 }
 
-export const useCmsStore = create<CmsState>()(
-  persist(
-    (set) => ({
-      data: {
-        hero: {
-          offerText: "🎁 SPECIAL: 20% OFF ALL SUMMER TOYS!",
-          title: "Fun, Fashion & Learning for Every Kid",
-          subtitle: "Discover play-tested, parent-approved gear from toys to trendy clothing at MindSky.store!",
-          primaryBtnText: "🛒 Shop Now",
-          secondaryBtnText: "🎁 Explore Offers",
-        },
-        promo: {
-          title: "Join the MindSky VIP Club!",
-          subtitle: "Get exclusive early access to new toys, special discounts, and birthday surprises for your little ones.",
-          btnText: "Sign Up for Free",
-          highlight: "VIP ONLY"
-        }
-      },
-      updateHero: (hero) => set((state) => ({ 
-        data: { ...state.data, hero: { ...state.data.hero, ...hero } } 
-      })),
-      updatePromo: (promo) => set((state) => ({ 
-        data: { ...state.data, promo: { ...state.data.promo, ...promo } } 
-      })),
-    }),
-    {
-      name: 'cms-storage',
+export const useCmsStore = create<CmsState>((set) => ({
+  data: {
+    hero_title: "Fun, Fashion & Learning for Every Kid",
+    hero_subtitle: "Discover play-tested, parent-approved gear from toys to trendy clothing at MindSky.store!",
+    hero_button_text: "🛒 Shop Now",
+    hero_link: "/shop",
+    footer_description: "Making learning fun and play educational. Your one-stop shop for kids' toys, clothing, and gear.",
+    promo: {
+      highlight: "NEW ARRIVALS",
+      title: "Science & Discovery",
+      subtitle: "Unleash their inner explorer with our physics and chemistry play-kits.",
+      btnText: "Explore Collection"
     }
-  )
-);
+  },
+  isLoading: false,
+  fetchCMS: async () => {
+    set({ isLoading: true });
+    try {
+      const res = await fetch('/api/cms');
+      const json = await res.json();
+      if (json.success) {
+        set({ data: { ...json.data }, isLoading: false });
+      } else {
+        set({ isLoading: false });
+      }
+    } catch (err) {
+      console.error("CMS Fetch Failed", err);
+      set({ isLoading: false });
+    }
+  },
+  updateCMS: (newData) => set((state) => ({
+    data: { ...state.data, ...newData }
+  }))
+}));

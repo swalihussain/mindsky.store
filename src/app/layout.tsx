@@ -3,6 +3,9 @@ import { Sora } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
+import ScrollProgress from "@/components/navigation/ScrollProgress";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import StoreInitializer from "@/components/providers/StoreInitializer";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -22,9 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sora.className} min-h-screen antialiased flex flex-col bg-[var(--background)] text-[var(--foreground)]`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <SmoothScrollProvider>
+          <ScrollProgress />
+          <StoreInitializer />
+          <Navbar />
+          {children}
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

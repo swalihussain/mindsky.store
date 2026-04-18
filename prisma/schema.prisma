@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  product_name   String
+  category_id    String?
+  brand_id       String?
+  description    String?
+  price          Float
+  discount_price Float?
+  stock          Int      @default(0)
+  image_url      String?
+  age_group      String?
+  status         String   @default("Active")
+  created_at     DateTime @default(now())
+}
+
+model Category {
+  id             String   @id @default(uuid())
+  category_name  String
+  category_image String?
+}
+
+model Order {
+  id           String   @id @default(uuid())
+  customer_id  String
+  total_amount Float
+  order_status String   @default("Pending")
+  created_at   DateTime @default(now())
+}
+
+model Customer {
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+  phone String?
+}
+
+model Offer {
+  id           String   @id @default(uuid())
+  offer_title  String
+  discount     Float
+  start_date   DateTime?
+  end_date     DateTime?
+}
+
+model Review {
+  id            String   @id @default(uuid())
+  customer_name String
+  product_id    String
+  review_text   String?
+  rating        Int
+}
+
+model CmsSettings {
+  id               String @id @default("default")
+  hero_title       String?
+  hero_subtitle    String?
+  hero_image       String?
+  hero_button_text String?
+  footer_text      String?
+}

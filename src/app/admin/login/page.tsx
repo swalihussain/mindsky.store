@@ -29,7 +29,7 @@ export default function AdminLogin() {
         {/* Soft background glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#E6F3FF] rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
         
-        <div className="w-20 h-20 bg-blue-50 text-[#4DA6FF] rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-4 border-white shadow-sm">
+        <div className="w-20 h-20 bg-blue-50 text-[#024fe7] rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-4 border-white shadow-sm">
            <Lock size={36} />
         </div>
         
@@ -42,7 +42,7 @@ export default function AdminLogin() {
             placeholder="Enter password..." 
             value={password}
             onChange={(e) => {setPassword(e.target.value); setError(false);}}
-            className={`w-full p-4 rounded-xl border-2 mb-4 focus:outline-none transition-colors text-center text-lg font-bold tracking-widest ${error ? 'border-red-300 focus:border-red-500 bg-red-50/50' : 'border-gray-100 focus:border-[#4DA6FF] bg-gray-50'}`}
+            className={`w-full p-4 rounded-xl border-2 mb-4 focus:outline-none transition-colors text-center text-lg font-bold tracking-widest ${error ? 'border-red-300 focus:border-red-500 bg-red-50/50' : 'border-gray-100 focus:border-[#024fe7] bg-gray-50'}`}
           />
           {error && <p className="text-red-500 text-sm font-bold mb-4 animate-pulse">Incorrect password. Tip: Try "admin123"</p>}
           <button type="submit" className="w-full bg-gray-900 text-white font-bold text-lg py-4 rounded-xl shadow-[0_4px_0_#333333] hover:shadow-[0_2px_0_#333333] hover:translate-y-[2px] transition-all">

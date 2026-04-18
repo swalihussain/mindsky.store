@@ -34,12 +34,12 @@ export default function Engagement() {
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
-            className="w-16 h-16 bg-[#4DA6FF] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white"
+            className="w-16 h-16 bg-[#024fe7] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg text-white"
           >
             <Brain size={32} />
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-gray-800 mb-4">Learn & Play Corner</h2>
-          <div className="w-24 h-2 bg-[#4DA6FF] mx-auto rounded-full"></div>
+          <div className="w-24 h-2 bg-[#024fe7] mx-auto rounded-full"></div>
           <p className="mt-6 text-gray-600 max-w-2xl mx-auto text-lg">We believe that learning should be just as much fun as playing! Explore our weekly tips, fun facts, and activities.</p>
         </div>
 

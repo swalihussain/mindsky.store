@@ -2,21 +2,24 @@ import Hero from "@/components/home/Hero";
 import Categories from "@/components/home/Categories";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import Engagement from "@/components/home/Engagement";
-import PromoBanner from "@/components/home/PromoBanner";
+import LearnPlayCorner from "@/components/home/LearnPlayCorner";
 import Reviews from "@/components/home/Reviews";
-import Newsletter from "@/components/home/Newsletter";
+import WhatsAppOrder from "@/components/home/WhatsAppOrder";
+
+import ErrorBoundary from "@/components/common/ErrorBoundary";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow">
-        <Hero />
-        <Categories />
-        <FeaturedProducts />
-        <PromoBanner />
-        <Engagement />
-        <Reviews />
-        <Newsletter />
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      <main className="flex-grow pt-20 bg-soft-gradient">
+        <ErrorBoundary>
+          <Hero />
+          <Categories />
+          <FeaturedProducts />
+          <LearnPlayCorner />
+          <Reviews />
+          <WhatsAppOrder />
+        </ErrorBoundary>
       </main>
     </div>
   );
