@@ -48,7 +48,8 @@ export default function CheckoutPage() {
         alert("System encountered a protocol error during settlement.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("SETTLEMENT_PROTOCOL_FAILURE:", err);
+      alert("System encountered a critical protocol failure. Check console coordinates.");
     } finally {
       setIsProcessing(false);
     }

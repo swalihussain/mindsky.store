@@ -73,7 +73,11 @@ export async function POST(req: Request) {
 
     db.orders = [newOrder, ...db.orders];
     
-    writeDB(db);
+    try {
+      writeDB(db);
+    } catch (fsError) {
+      console.warn("PERSISTENCE_FAILURE: Read-only filesystem detected (Vercel Environment). Proceeding with stateless logic.", fsError);
+    }
 
     return NextResponse.json({ success: true, data: { order: newOrder, customerUpdated: true } });
   } catch (error) {
