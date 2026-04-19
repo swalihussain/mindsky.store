@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from 'react';
 import { 
   Save, Layout, Type, MousePointer2, CheckCircle, Loader2, Sparkles, 
