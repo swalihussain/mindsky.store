@@ -4,15 +4,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useProductStore } from '@/store/productStore';
-import { Tag } from 'lucide-react';
-
-const COLORS = [
-  { bg: 'bg-rose-100', text: 'text-rose-500' },
-  { bg: 'bg-blue-100', text: 'text-blue-500' },
-  { bg: 'bg-amber-100', text: 'text-amber-500' },
-  { bg: 'bg-teal-100', text: 'text-teal-500' },
-  { bg: 'bg-purple-100', text: 'text-purple-500' },
-];
+import { Tag, Sparkles, LayoutGrid } from 'lucide-react';
 
 export default function CategorySection() {
   const { categories, fetchCategories, isCategoriesLoading } = useProductStore();
@@ -31,55 +23,65 @@ export default function CategorySection() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
-          <h2 className="text-4xl md:text-5xl font-heading font-black text-gray-800 mb-4 inline-block relative">
-            Shop By <span className="text-[#024fe7]">Category</span>
-            <span className="absolute -bottom-2 right-0 w-1/2 h-2 bg-[#FFD966] rounded-full opacity-30"></span>
-          </h2>
+          <div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-black tracking-tighter italic">
+              Shop By <span className="text-[#024fe7]">Category</span>
+            </h2>
+            <p className="text-gray-400 font-bold mt-4 max-w-xl">
+              Curated departments designed to spark joy and foster development across all growth stages.
+            </p>
+          </div>
+          <Link href="/categories" className="brand-button-secondary whitespace-nowrap">
+            All Departments
+          </Link>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.length === 0 ? (
              <div className="col-span-full py-20 text-center bg-gray-50 rounded-[48px] border-2 border-dashed border-gray-200">
                 <p className="text-gray-400 font-bold italic">"Preparing our curated departments... Add categories in Admin to begin!"</p>
              </div>
-          ) : categories.map((cat, index) => {
-            const color = COLORS[index % COLORS.length];
-            return (
-              <Link href={`/shop?category=${encodeURIComponent(cat.name)}`} key={cat.id || index} className="group block">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className={`${color.bg} rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition-all duration-300 border-2 border-transparent group-hover:border-white h-full min-h-[180px]`}
-                >
-                  <div className="mb-4 h-16 w-16 bg-white/50 rounded-2xl flex items-center justify-center overflow-hidden">
-                    {cat.imageUrl ? (
-                      <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
-                    ) : (
-                      <Tag className={color.text} size={32} />
-                    )}
-                  </div>
-                  <h3 className={`font-black font-heading text-lg md:text-xl ${color.text} tracking-tight leading-tight`}>
-                    {cat.name}
-                  </h3>
-                </motion.div>
-              </Link>
-            );
-          })}
+          ) : categories.map((cat, index) => (
+            <Link href={`/shop?category=${encodeURIComponent(cat.name)}`} key={cat.id || index} className="group">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="brand-card h-full flex flex-col items-start"
+              >
+                <div className="mb-6 h-16 w-16 bg-blue-50 rounded-2xl flex items-center justify-center overflow-hidden border border-blue-100 group-hover:bg-[#024fe7] transition-all">
+                  {cat.imageUrl ? (
+                    <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                  ) : (
+                    <LayoutGrid className="text-[#024fe7] group-hover:text-white transition-all" size={32} />
+                  )}
+                </div>
+                <h3 className="font-black text-xl text-black mb-3 tracking-tight group-hover:text-[#024fe7] transition-colors">
+                  {cat.name}
+                </h3>
+                <p className="text-gray-400 text-sm font-medium line-clamp-2 leading-relaxed">
+                  {cat.description || `High-quality ${cat.name.toLowerCase()} selection for growing minds.`}
+                </p>
+                <div className="mt-8 flex items-center gap-2 text-[#024fe7] font-black text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
+                  Explore Now <Tag size={12} />
+                </div>
+              </motion.div>
+            </Link>
+          ))}
         </div>
 
       </div>
     </section>
   );
 }
+
