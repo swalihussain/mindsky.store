@@ -1,12 +1,9 @@
-"use client";
-
 import { useState, useEffect } from 'react';
 import { 
   Save, Layout, Type, MousePointer2, CheckCircle, Loader2, Sparkles, 
   MessageSquareQuote, Brain, Lightbulb, Award, FileDown, Plus, Trash2,
   ToggleRight, ToggleLeft, ImageIcon, FileText, Hash, X
 } from 'lucide-react';
-import AdminDashboard from "@/components/admin/AdminDashboard";
 
 export default function AtmosphereCMS() {
   const [cmsData, setCmsData] = useState<any>(null);
@@ -95,16 +92,13 @@ export default function AtmosphereCMS() {
   };
 
   if (loading) return (
-     <AdminDashboard activeTab="cms">
-        <div className="flex-1 flex flex-col items-center justify-center py-40 gap-4 text-gray-200">
-           <Loader2 className="w-10 h-10 animate-spin" />
-           <span className="font-black text-[10px] uppercase tracking-[0.4em]">Syncing Master Narrative...</span>
-        </div>
-     </AdminDashboard>
+     <div className="flex-1 flex flex-col items-center justify-center py-40 gap-4 text-gray-200">
+        <Loader2 className="w-10 h-10 animate-spin" />
+        <span className="font-black text-[10px] uppercase tracking-[0.4em]">Syncing Master Narrative...</span>
+     </div>
   );
 
   return (
-    <AdminDashboard activeTab="cms">
     <div className="max-w-6xl w-full h-full pb-20 animate-in slide-in-from-bottom-4 duration-700">
       
       {/* GLOBAL HUD HEADER */}
@@ -274,6 +268,5 @@ export default function AtmosphereCMS() {
         </div>
       )}
     </div>
-    </AdminDashboard>
   );
 }

@@ -1,12 +1,24 @@
 "use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { 
-  LayoutDashboard, ShoppingBag, Users, Settings, Package, Tag, 
-  CreditCard, LogOut, FileText, ImageIcon, BarChart3, Star, Layers, 
-  ShieldCheck, Box, MonitorSmartphone, Brain, MessageCircle 
-} from 'lucide-react';
+  LayoutDashboard, 
+  Package, 
+  Tag, 
+  ShoppingBag, 
+  Users, 
+  Star, 
+  Settings, 
+  PhoneCall, 
+  LogOut,
+  ChevronRight,
+  UserCircle,
+  Mail,
+  Box,
+  BarChart3,
+  ShieldCheck
+} from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -14,95 +26,104 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-
-  // If the user is on the login page, strip away the sidebar structure entirely
+  const router = useRouter();
+  
+  // Skip sidebar for login page
   if (pathname === '/admin/login') {
-    return <div className="min-h-screen bg-gray-50 font-sans pt-20">{children}</div>;
+    return <div className="min-h-screen bg-gray-50">{children}</div>;
   }
+
+  // MOCK LOGGED IN USER (Consistent with AdminDashboard)
+  const currentUser = {
+    name: "Admin Setup",
+    role: "Super Admin" as const
+  };
 
   const handleLogout = () => {
     document.cookie = "admin_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = '/admin/login';
   };
 
-  const navLinks = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Products', path: '/admin/products', icon: Package },
-    { name: 'Categories', path: '/admin/categories', icon: Layers },
-    { name: 'Inventory / Stock', path: '/admin/inventory', icon: Box },
-    { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },
-    { name: 'Customers', path: '/admin/customers', icon: Users },
-    { name: 'Offers & Coupons', path: '/admin/offers', icon: Tag },
-    { name: 'Reviews', path: '/admin/reviews', icon: Star },
-    { name: 'Homepage CMS', path: '/admin/homepage', icon: FileText },
-    { name: 'WhatsApp Settings', path: '/admin/whatsapp', icon: MessageCircle },
-    { name: 'Banner CMS', path: '/admin/banners', icon: ImageIcon },
-    { name: 'Reports & Revenue', path: '/admin/reports', icon: BarChart3 },
-    { name: 'Users & Permissions', path: '/admin/users', icon: ShieldCheck },
+  const allMenuItems = [
+    { id: 'dashboard', label: 'Overview', icon: LayoutDashboard, path: '/admin/dashboard', roles: ["Super Admin", "Admin", "Manager", "Staff", "Support Agent"] },
+    { id: 'products', label: 'Products', icon: Package, path: '/admin/products', roles: ["Super Admin", "Admin"] },
+    { id: 'categories', label: 'Categories', icon: Tag, path: '/admin/categories', roles: ["Super Admin", "Admin"] },
+    { id: 'inventory', label: 'Inventory', icon: Box, path: '/admin/inventory', roles: ["Super Admin", "Admin", "Manager"] },
+    { id: 'orders', label: 'Orders', icon: ShoppingBag, path: '/admin/orders', roles: ["Super Admin", "Admin", "Manager", "Staff", "Support Agent"] },
+    { id: 'customers', label: 'Intelligence', icon: Users, path: '/admin/customers', roles: ["Super Admin", "Admin", "Manager", "Support Agent"] },
+    { id: 'offers', label: 'Offers', icon: Tag, path: '/admin/offers', roles: ["Super Admin", "Admin", "Manager"] },
+    { id: 'reviews', label: 'Feedback', icon: Star, path: '/admin/reviews', roles: ["Super Admin", "Admin"] },
+    { id: 'whatsapp', label: 'WhatsApp', icon: PhoneCall, path: '/admin/whatsapp', roles: ["Super Admin"] },
+    { id: 'contact', label: 'Public Reach', icon: Mail, path: '/admin/contact', roles: ["Super Admin", "Admin", "Support Agent"] },
+    { id: 'staff', label: 'Governance', icon: Users, path: '/admin/staff', roles: ["Super Admin"] },
+    { id: 'cms', label: 'Atmosphere', icon: Settings, path: '/admin/cms', roles: ["Super Admin"] },
+    { id: 'reports', label: 'Earnings', icon: BarChart3, path: '/admin/reports', roles: ["Super Admin"] },
+    { id: 'users', label: 'Permissions', icon: ShieldCheck, path: '/admin/users', roles: ["Super Admin"] },
   ];
 
+  const menuItems = allMenuItems.filter(item => item.roles.includes(currentUser.role));
+
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden font-sans pt-20">
-      {/* Admin Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex shrink-0">
-        <div className="h-16 flex items-center px-6 border-b border-gray-100 shrink-0">
-          <Link href="/admin" className="font-heading font-extrabold text-2xl text-[#024fe7]">
-            MindSky<span className="text-[#FFD966]">Admin</span>
+    <div className="flex min-h-screen bg-[#F9FAFB]">
+      {/* Sidebar */}
+      <aside className="w-80 bg-[#1F2937] text-white flex flex-col shadow-2xl relative z-50 shrink-0 h-screen sticky top-0">
+        <div className="p-10 border-b border-white/5">
+          <Link href="/" className="flex flex-col">
+            <span className="text-2xl font-black italic tracking-tighter text-[#024fe7]">MindSky<span className="text-white">.Admin</span></span>
+            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-gray-500 mt-2">Enterprise Ecosystem</span>
           </Link>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive = pathname === link.path || (link.path !== '/admin' && pathname.startsWith(link.path));
-            
+        <nav className="flex-1 py-10 px-4 space-y-2 overflow-y-auto custom-scrollbar">
+          {menuItems.map((item) => {
+            const isActive = pathname === item.path || (item.path !== '/admin' && pathname.startsWith(item.path));
             return (
               <Link 
-                key={link.name} 
-                href={link.path} 
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                key={item.id} 
+                href={item.path}
+                className={`flex items-center justify-between px-6 py-4 rounded-[20px] transition-all duration-300 group ${
                   isActive 
-                    ? 'bg-[#024fe7] text-white shadow-[0_3px_0_#013ca3] -translate-y-[1px]' 
-                    : 'text-gray-600 hover:bg-gray-50'
+                  ? 'bg-[#024fe7] text-white shadow-lg shadow-[#024fe7]/20 scale-[1.02]' 
+                  : 'text-gray-400 hover:bg-white/5 hover:text-white'
                 }`}
               >
-                <Icon size={18} /> {link.name}
+                <div className="flex items-center gap-4">
+                  <item.icon size={20} className={isActive ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'} />
+                  <span className="font-black text-xs uppercase tracking-widest">{item.label}</span>
+                </div>
+                {isActive && <ChevronRight size={16} />}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-100 shrink-0">
-          <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-xl font-medium transition-colors">
-            <Settings size={18} /> Settings
-          </Link>
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-xl font-medium transition-colors mt-1">
-            <LogOut size={18} /> Sign Out
+        <div className="p-8 border-t border-white/5">
+          <button onClick={handleLogout} className="w-full flex items-center justify-center gap-3 py-4 bg-white/5 hover:bg-rose-500/10 hover:text-rose-500 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest group">
+            <LogOut size={16} className="opacity-40 group-hover:opacity-100" /> Sign Out Asset
           </button>
         </div>
       </aside>
 
-      {/* Main Admin Content */}
-      <main className="flex-1 flex flex-col relative z-50 bg-gray-50 h-full overflow-y-auto w-full">
-        <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-10 w-full shrink-0 shadow-sm">
-          <h1 className="text-xl font-bold font-heading text-gray-800 hidden sm:block">Control Panel</h1>
-          
-          <div className="flex items-center gap-6 ml-auto">
-            <Link href="/" target="_blank" className="text-sm font-bold text-[#024fe7] hover:underline flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100">
-               <MonitorSmartphone size={16} /> Live View
-            </Link>
-            <div className="flex items-center gap-3 border-l border-gray-200 pl-6">
-              <div className="flex flex-col text-right">
-                <span className="text-sm font-bold text-gray-800 leading-none">Super Admin</span>
-                <span className="text-xs font-medium text-gray-500 mt-1">Full Access</span>
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col min-h-screen overflow-hidden relative">
+        <header className="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-12 sticky top-0 z-40 backdrop-blur-md bg-white/80 shrink-0">
+           <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-[#024fe7] font-black text-xs shadow-inner">MS</div>
+              <span className="font-black text-[#1F2937] text-xs uppercase tracking-widest">Active Session: Explorer-01</span>
+           </div>
+           
+           <div className="flex items-center gap-8">
+              <div className="flex flex-col items-end">
+                 <span className="font-black text-[#1F2937] text-[10px] uppercase tracking-widest">Authorized Superuser</span>
+                 <span className="text-[#024fe7] font-bold text-[10px] italic">Access Level: Unified Management</span>
               </div>
-              <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center font-bold text-white shadow-sm cursor-pointer border-2 border-white ring-2 ring-gray-100">
-                SA
+              <div className="w-12 h-12 bg-gray-50 rounded-[18px] border-2 border-white shadow-sm overflow-hidden p-1 flex items-center justify-center">
+                 <UserCircle size={32} className="text-gray-300" />
               </div>
-            </div>
-          </div>
+           </div>
         </header>
-        <div className="p-8 w-full">
+
+        <div className="p-12 flex-1 overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
           {children}
         </div>
       </main>
