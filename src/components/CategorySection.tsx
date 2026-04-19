@@ -14,7 +14,7 @@ const COLORS = [
   { bg: 'bg-purple-100', text: 'text-purple-500' },
 ];
 
-export default function Categories() {
+export default function CategorySection() {
   const { categories, fetchCategories, isCategoriesLoading } = useProductStore();
 
   useEffect(() => {

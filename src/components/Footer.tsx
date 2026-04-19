@@ -3,9 +3,30 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MapPin, Phone, Mail, MessageCircle, Camera, Globe, Video } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function Footer() {
   const pathname = usePathname();
+  const [settings, setSettings] = useState({
+    address: "123 Fun Street, Playville, Learning State 45678",
+    phone: "+1 (800) MINDSKY",
+    email: "hello@mindsky.store"
+  });
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/contact-settings');
+        const json = await res.json();
+        if (json.success && json.settings) {
+          setSettings(json.settings);
+        }
+      } catch (err) {
+        console.error("Footer: Failed to load communication settings", err);
+      }
+    };
+    fetchSettings();
+  }, []);
   
   if (pathname.startsWith('/admin')) {
     return null;
@@ -63,15 +84,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-600 font-medium">
                 <MapPin size={24} className="text-[#024fe7] shrink-0" />
-                <span>123 Fun Street, Playville, Learning State 45678</span>
+                <span>{settings.address}</span>
               </li>
               <li className="flex items-center gap-3 text-gray-600 font-medium">
                 <Phone size={20} className="text-[#024fe7] shrink-0" />
-                <span>+1 (800) MINDSKY</span>
+                <span>{settings.phone}</span>
               </li>
               <li className="flex items-center gap-3 text-gray-600 font-medium">
                 <Mail size={20} className="text-[#024fe7] shrink-0" />
-                <span>hello@mindsky.store</span>
+                <span>{settings.email}</span>
               </li>
             </ul>
           </div>

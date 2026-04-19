@@ -1,6 +1,22 @@
 import { NextResponse } from 'next/server';
 import { readDB, writeDB } from '@/lib/db';
 
+export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+  try {
+    const { id: idParam } = await context.params;
+    const db = readDB();
+    const product = db.products.find(p => (p?.id || "").toString() === (idParam || "").toString());
+    
+    if (!product) {
+      return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json({ success: true, data: product });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
 export async function PUT(request: Request, context: { params: Promise<{ id: string }> }) {
   try {
     const { id: idParam } = await context.params;

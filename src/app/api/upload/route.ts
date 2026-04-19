@@ -1,45 +1,39 @@
-import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
-import fs from 'fs';
+import { NextResponse } from "next/server";
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const data = await request.formData();
-    const file: File | null = data.get('file') as unknown as File;
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
 
     if (!file) {
-      return NextResponse.json({ success: false, error: 'No file provided.' }, { status: 400 });
-    }
-
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ success: false, error: 'Invalid file format. Only JPG, PNG, WEBP, and PDF are supported.' }, { status: 400 });
-    }
-    
-    if (file.size > 2 * 1024 * 1024) {
-      return NextResponse.json({ success: false, error: 'File size exceeds the 2MB limit.' }, { status: 400 });
+      return NextResponse.json({ success: false, error: "No file provided" }, { status: 400 });
     }
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const ext = file.name.split('.').pop() || 'jpg';
-    const uniqueName = `upload_${Date.now()}_${Math.round(Math.random() * 1000)}.${ext}`;
+    const uploadDir = path.join(process.cwd(), "public", "uploads");
     
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-
-    if (!fs.existsSync(uploadDir)) {
+    // Ensure directory exists
+    try {
       await mkdir(uploadDir, { recursive: true });
+    } catch (err) {
+      // Ignore
     }
 
-    const filePath = path.join(uploadDir, uniqueName);
+    const safeFilename = `${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase()}`;
+    const filePath = path.join(uploadDir, safeFilename);
+
     await writeFile(filePath, buffer);
 
-    return NextResponse.json({ success: true, url: `/uploads/${uniqueName}` });
-
+    return NextResponse.json({ 
+      success: true, 
+      url: `/uploads/${safeFilename}` 
+    });
   } catch (error: any) {
-    console.error("Upload error:", error);
+    console.error("Upload API Error:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

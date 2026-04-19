@@ -7,12 +7,9 @@ export async function GET(request: Request) {
     const isAdmin = url.searchParams.get('admin') === 'true';
 
     const db = readDB();
-    
-    // Return newest first
     let sortedProducts = [...db.products].reverse();
     
     if (!isAdmin) {
-      // Use the new keys provided by the user (name, category, status)
       sortedProducts = sortedProducts.filter(p => p.status === 'Active');
     }
 
@@ -25,8 +22,6 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
-    // Support both old and new key formats for robustness during transition
     const prodName = body.name || body.product_name;
     const prodPrice = body.price;
 
@@ -35,17 +30,14 @@ export async function POST(request: Request) {
     }
 
     const db = readDB();
-    
-    // ⭐ EXACT OBJECT STRUCTURE REQUESTED BY USER
     const newProduct = {
-      id: Date.now(), // ID MUST HAVE as numeric timestamp
+      id: Date.now(),
       name: prodName,
       category: body.category || body.category_id || '',
       price: Number(body.price),
       stock: Number(body.stock || 0),
       status: "Active",
       createdAt: new Date().toISOString(),
-      // Retaining secondary fields for internal consistency with UI
       description: body.description || '',
       brand: body.brand || body.brand_id || '',
       imageUrl: body.imageUrl || body.image_url || '',

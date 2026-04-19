@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lightbulb, Award, FileDown, ArrowRight, Brain } from 'lucide-react';
 
-export default function LearnPlayCorner() {
+export default function LearnPlaySection() {
   const [data, setData] = useState<any>(null);
   const [indices, setIndices] = useState({ fact: 0, tip: 0 });
 

@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const body = await req.json();
-    const db = await readDB();
+    const db = readDB();
     
     const index = db.orders.findIndex((o: any) => o.id === id);
     if (index === -1) return NextResponse.json({ success: false, error: "Order not found" }, { status: 404 });
 
     db.orders[index] = { ...db.orders[index], ...body };
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: db.orders[index] });
   } catch (error) {
@@ -23,10 +22,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const db = await readDB();
+    const db = readDB();
     
     db.orders = db.orders.filter((o: any) => o.id !== id);
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, message: "Order deleted" });
   } catch (error) {

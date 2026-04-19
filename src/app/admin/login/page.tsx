@@ -11,8 +11,8 @@ export default function AdminLogin() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate checking the password (for mockup purposes: 'admin123')
-    if (password === 'admin123') {
+    // Simulate checking the password (for mockup purposes: 'mindsky.26')
+    if (password === 'mindsky.26') {
       // Set a persistent cookie that the Middleware will verify
       document.cookie = "admin_auth=authorized; path=/; max-age=86400"; // Expires in 24 hrs
       router.push('/admin');
@@ -44,7 +44,7 @@ export default function AdminLogin() {
             onChange={(e) => {setPassword(e.target.value); setError(false);}}
             className={`w-full p-4 rounded-xl border-2 mb-4 focus:outline-none transition-colors text-center text-lg font-bold tracking-widest ${error ? 'border-red-300 focus:border-red-500 bg-red-50/50' : 'border-gray-100 focus:border-[#024fe7] bg-gray-50'}`}
           />
-          {error && <p className="text-red-500 text-sm font-bold mb-4 animate-pulse">Incorrect password. Tip: Try "admin123"</p>}
+          {error && <p className="text-red-500 text-sm font-bold mb-4 animate-pulse">Incorrect password. Tip: Try "mindsky.26"</p>}
           <button type="submit" className="w-full bg-gray-900 text-white font-bold text-lg py-4 rounded-xl shadow-[0_4px_0_#333333] hover:shadow-[0_2px_0_#333333] hover:translate-y-[2px] transition-all">
             Unlock Dashboard
           </button>

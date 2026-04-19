@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 
-export default function WhatsAppOrder() {
+export default function WhatsAppSection() {
   const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {

@@ -58,9 +58,12 @@ export const useProductStore = create<ProductStoreState>((set) => ({
      try {
        const res = await fetch('/api/categories');
        const json = await res.json();
-       if (json.success) set({ categories: json.data, isCategoriesLoading: false });
+       if (json.success) {
+         set({ categories: json.data });
+       }
      } catch (err) {
        console.error("Failed to load categories", err);
+     } finally {
        set({ isCategoriesLoading: false });
      }
   },
@@ -71,7 +74,6 @@ export const useProductStore = create<ProductStoreState>((set) => ({
       const json = await res.json();
       
       if (json.success) {
-        // High-resilience filter: Case-insensitive status check and category presence
         const validDocs = (json.data || []).filter((p: any) => {
           const status = (p.status || "").toLowerCase();
           const hasCategory = !!p.category || !!p.category_id;
@@ -104,12 +106,11 @@ export const useProductStore = create<ProductStoreState>((set) => ({
             badges: hasDiscount ? ['Sale'] : [],
           };
         });
-        set({ products: mappedProducts, isLoading: false });
-      } else {
-        set({ isLoading: false });
+        set({ products: mappedProducts });
       }
     } catch (err) {
       console.error("Failed to load DB products", err);
+    } finally {
       set({ isLoading: false });
     }
   }

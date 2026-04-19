@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCmsStore } from '@/store/cmsStore';
 
-export default function Hero() {
+export default function HeroSection() {
   const { data, fetchCMS } = useCmsStore();
   const [banners, setBanners] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

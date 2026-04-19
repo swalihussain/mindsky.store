@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function GET() {
   try {
-    const db = await readDB();
+    const db = readDB();
     return NextResponse.json({ success: true, data: db.orders || [] });
   } catch (error) {
     return NextResponse.json({ success: false, error: "Failed to load orders" }, { status: 500 });
@@ -14,7 +13,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const db = await readDB();
+    const db = readDB();
     
     if (!db.orders) db.orders = [];
     if (!db.customers) db.customers = [];
@@ -31,18 +30,15 @@ export async function POST(req: Request) {
     const customerEmail = body.customer_email || body.email || "";
     const customerPhone = body.customer_phone || body.phone || "";
     
-    // Find existing customer by email or phone
     let customerIndex = db.customers.findIndex((c: any) => 
       (customerEmail && c.email === customerEmail) || 
       (customerPhone && c.phone === customerPhone)
     );
 
     if (customerIndex !== -1) {
-      // Update existing customer
       db.customers[customerIndex].total_orders += 1;
       db.customers[customerIndex].total_spend += orderTotal;
     } else {
-      // Create new customer record automatically
       const newCustomer = {
         id: Date.now(),
         name: body.customer_name,
@@ -77,8 +73,7 @@ export async function POST(req: Request) {
 
     db.orders = [newOrder, ...db.orders];
     
-    // Save synchronized database state
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: { order: newOrder, customerUpdated: true } });
   } catch (error) {

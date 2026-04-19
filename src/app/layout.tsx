@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Sora } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navigation/Navbar";
-import Footer from "@/components/navigation/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/navigation/ScrollProgress";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import StoreInitializer from "@/components/providers/StoreInitializer";

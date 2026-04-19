@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const id = Number(searchParams.get('id'));
     
-    const db = await readDB();
+    const db = readDB();
     const index = db.learn_play.printables.findIndex((p: any) => p.id === id);
     
     if (index !== -1) {
       db.learn_play.printables[index].downloads = (db.learn_play.printables[index].downloads || 0) + 1;
-      await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+      writeDB(db);
       
       const fileUrl = db.learn_play.printables[index].file_url;
       // In a real production app, you might stream the file here.

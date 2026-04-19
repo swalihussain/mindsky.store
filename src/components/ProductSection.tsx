@@ -10,7 +10,7 @@ import { useProductStore } from '@/store/productStore';
 
 // Component for displaying dynamic database products on the homepage
 
-export default function FeaturedProducts() {
+export default function ProductSection() {
   const { products, fetchProducts, isLoading } = useProductStore();
   const addItem = useCartStore((state) => state.addItem);
 

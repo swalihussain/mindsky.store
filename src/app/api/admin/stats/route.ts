@@ -3,7 +3,7 @@ import { readDB } from "@/lib/db";
 
 export async function GET() {
   try {
-    const db = await readDB();
+    const db = readDB();
     
     const products = db.products || [];
     const orders = db.orders || [];

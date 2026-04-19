@@ -120,20 +120,14 @@
       "created_at": "2026-04-18T15:53:05.253Z"
     }
   ],
-  "cms": {
-    "hero_title": "Fun, Fashion & Learning for Every Kid",
-    "hero_subtitle": "Discover play-tested, parent-approved gear.",
-    "hero_button_text": "Shop Now"
-  },
-  "reviews": [
+  "banners": [
     {
-      "id": 1776515978890,
-      "user": "Swalihussain",
-      "product": "Global Store",
-      "text": "Good service, thank you mindsky",
-      "rating": 5,
-      "status": "Approved",
-      "createdAt": "2026-04-18T12:39:38.890Z"
+      "id": 1776515361350,
+      "title": "Super Spider",
+      "imageUrl": "/uploads/upload_1776515346072_316.jpg",
+      "link": "#",
+      "isActive": true,
+      "createdAt": "2026-04-18T12:29:21.350Z"
     }
   ],
   "offers": [
@@ -147,16 +141,60 @@
       "createdAt": "2026-04-18T12:01:28.440Z"
     }
   ],
-  "banners": [
+  "reviews": [
     {
-      "id": 1776515361350,
-      "title": "Super Spider",
-      "imageUrl": "/uploads/upload_1776515346072_316.jpg",
-      "link": "#",
-      "isActive": true,
-      "createdAt": "2026-04-18T12:29:21.350Z"
+      "id": 1776515978890,
+      "user": "Swalihussain",
+      "product": "Global Store",
+      "text": "Good service, thank you mindsky",
+      "rating": 5,
+      "status": "Approved",
+      "createdAt": "2026-04-18T12:39:38.890Z"
     }
   ],
+  "staff_users": [
+    {
+      "id": 1,
+      "name": "Admin Setup",
+      "email": "admin@global.store",
+      "phone": "",
+      "role": "Super Admin",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Support Agent",
+      "email": "support@global.store",
+      "phone": "",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": 1776581860723,
+      "name": "swalih",
+      "email": "mohdswalihbp128@gmail.com",
+      "phone": "9496079128",
+      "role": "Manager",
+      "status": "Active",
+      "createdAt": "2026-04-19T06:57:40.724Z"
+    }
+  ],
+  "whatsapp_settings": {
+    "number": "+917907406034",
+    "default_message": "Hello, welcome to mindsky.shop.",
+    "button_text": "Order Now",
+    "enabled": true
+  },
+  "contact_settings": {
+    "address": "123 Fun Street, Playville, Learning State 45678",
+    "phone": "+91 800 555 1234",
+    "email": "hello@mindsky.store"
+  },
+  "cms": {
+    "hero_title": "Fun, Fashion & Learning for Every Kid",
+    "hero_subtitle": "Discover play-tested, parent-approved gear.",
+    "hero_button_text": "Shop Now"
+  },
   "learn_play": {
     "fun_facts": [
       {
@@ -188,10 +226,28 @@
       }
     ]
   },
-  "whatsapp_settings": {
-    "number": "+917907406034",
-    "default_message": "Hello, welcome to mindsky.shop.",
-    "button_text": "Order Now",
-    "enabled": true
-  }
+  "staff": [
+    {
+      "id": 1,
+      "name": "Admin Setup",
+      "email": "admin@global.store",
+      "role": "Super Admin",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Support Agent",
+      "email": "support@global.store",
+      "role": "Staff",
+      "status": "Active"
+    },
+    {
+      "id": 1776580826214,
+      "name": "Moderator X",
+      "email": "mod@mindsky.store",
+      "role": "Moderator",
+      "status": "Active",
+      "createdAt": "2026-04-19T06:40:26.214Z"
+    }
+  ]
 }

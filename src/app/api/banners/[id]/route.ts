@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const db = await readDB();
+    const db = readDB();
     
     db.banners = db.banners.filter((b: any) => b.id.toString() !== id);
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, message: "Banner retired successfully" });
   } catch (error) {
@@ -20,13 +19,13 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   try {
     const { id } = await params;
     const body = await req.json();
-    const db = await readDB();
+    const db = readDB();
     
     const index = db.banners.findIndex((b: any) => b.id.toString() === id);
     if (index === -1) return NextResponse.json({ success: false, error: "Asset not found" }, { status: 404 });
 
     db.banners[index] = { ...db.banners[index], ...body };
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: db.banners[index] });
   } catch (error) {

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, MessageSquare, Quote, Heart, BadgeCheck, Loader2, Plus, XCircle, Send, CheckCircle2 } from 'lucide-react';
 
-export default function Reviews() {
+export default function ReviewSection() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
