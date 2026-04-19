@@ -92,7 +92,6 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
-<<<<<<< HEAD
 @layer utilities {
   /* Container Width Setup */
   .max-w-7xl {
@@ -135,7 +134,8 @@ h1, h2, h3, h4, h5, h6 {
     h1 { font-size: 48px !important; }
     h2 { font-size: 36px !important; }
   }
-=======
+}
+
 .brand-card {
   background-color: #ffffff;
   border: 1px solid #f1f5f9;
@@ -154,6 +154,5 @@ h1, h2, h3, h4, h5, h6 {
 .bg-soft-blue {
   background: radial-gradient(circle at top right, rgba(2, 79, 231, 0.03), transparent),
               radial-gradient(circle at bottom left, rgba(2, 79, 231, 0.03), transparent);
->>>>>>> d45db0ec2b019af140f84e86524df8b9e6d2e063
 }
 
