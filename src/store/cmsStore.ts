@@ -19,6 +19,8 @@ interface CmsState {
   isLoading: boolean;
   fetchCMS: () => Promise<void>;
   updateCMS: (data: Partial<CmsData>) => void;
+  updateHero: (hero: Partial<CmsData>) => void;
+  updatePromo: (promo: Partial<CmsData['promo']>) => void;
 }
 
 export const useCmsStore = create<CmsState>((set) => ({
@@ -53,5 +55,11 @@ export const useCmsStore = create<CmsState>((set) => ({
   },
   updateCMS: (newData) => set((state) => ({
     data: { ...state.data, ...newData }
+  })),
+  updateHero: (hero) => set((state) => ({
+    data: { ...state.data, ...hero }
+  })),
+  updatePromo: (promo) => set((state) => ({
+    data: { ...state.data, promo: { ...state.data.promo, ...promo } }
   }))
 }));
