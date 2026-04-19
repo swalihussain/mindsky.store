@@ -4,11 +4,9 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingBag, Star, ShieldCheck, Truck, RotateCcw, Award } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { useProductStore } from '@/store/productStore';
-
-// Component for displaying dynamic database products on the homepage
 
 export default function ProductSection() {
   const { products, fetchProducts, isLoading } = useProductStore();
@@ -18,11 +16,8 @@ export default function ProductSection() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Take the latest 8 products, preferring Name Slips for the Featured Section
-  const displayProducts = products
-    .filter(p => p.category === 'Name Slips')
-    .concat(products.filter(p => p.category !== 'Name Slips')) // Fallback if no Name Slips
-    .slice(0, 8);
+  // Take the latest 8 products from the dynamic DB load
+  const displayProducts = products.slice(0, 8);
 
   const handleAddToCart = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
@@ -31,25 +26,25 @@ export default function ProductSection() {
 
   if (isLoading) {
     return (
-      <div className="py-24 flex flex-col items-center justify-center gap-4 text-[#1F2937]/20 bg-gray-50/30">
+      <div className="py-24 flex flex-col items-center justify-center gap-4 text-[#024fe7]/20 bg-white">
         <div className="w-10 h-10 border-4 border-current border-t-transparent rounded-full animate-spin"></div>
-        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Curating Favorites...</span>
+        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Synchronizing Master Catalog...</span>
       </div>
     );
   }
 
   return (
-    <section className="py-[48px] bg-gray-50">
+    <section className="py-16 md:py-24 bg-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-[16px] md:mb-10 gap-6">
-          <motion.div 
+
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[22px] md:text-4xl font-bold text-black tracking-tight leading-tight">
-              MindSky Best Moving Product
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+              Trending Favorites
             </h2>
           </motion.div>
           <Link href="/shop" className="text-[#024fe7] font-semibold hover:underline hidden md:block">
@@ -59,99 +54,111 @@ export default function ProductSection() {
 
         {displayProducts.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-[32px] border border-dashed border-gray-200">
-             <p className="text-gray-400 font-bold italic">"We're curating new arrivals! Check back soon for exciting toys & gear."</p>
+            <p className="text-gray-400 font-bold italic">"We're curating new arrivals! Check back soon for exciting toys & gear."</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {displayProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.4 }}
-              className="bg-white rounded-[14px] p-4 shadow-sm transition-all duration-300 group flex flex-col relative"
-            >
-              {/* Badges Container */}
-              <div className="absolute top-5 left-5 z-10 flex flex-col gap-1.5">
-                <span className="bg-[#FFD966] text-black text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
-                  Best Seller
-                </span>
-                {product.isNew && (
-                  <span className="bg-[#024FE7] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
-                    New
-                  </span>
-                )}
-                {product.isSale && (
-                  <span className="bg-[#FF4D4D] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
-                    Sale
-                  </span>
-                )}
-              </div>
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.4 }}
+                className="bg-white rounded-[16px] p-[12px] shadow-sm hover:shadow-md hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group flex flex-col relative"
+              >
+                {/* Badges Container */}
+                <div className="absolute top-5 left-5 z-10 flex flex-col gap-1.5">
+                  {product.isNew && (
+                    <span className="bg-[#024fe7] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
+                      New
+                    </span>
+                  )}
+                  {product.isSale && (
+                    <span className="bg-[#FF4D4D] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
+                      Sale
+                    </span>
+                  )}
+                </div>
 
-              {/* Wishlist Heart Top-Right */}
-              <button className="absolute top-5 right-5 z-10 w-8 h-8 md:w-9 md:h-9 bg-white/90 backdrop-blur-[2px] rounded-full flex items-center justify-center text-gray-400 hover:text-rose-500 hover:bg-rose-50 transition-colors shadow-sm">
-                <Heart size={18} className="group-hover:scale-110 transition-transform" />
-              </button>
+                {/* Wishlist */}
+                <button className="absolute top-8 right-8 z-10 w-10 h-10 bg-white/80 backdrop-blur-md rounded-2xl flex items-center justify-center text-gray-300 hover:text-rose-500 transition-all border border-gray-50 shadow-sm">
+                  <Heart size={20} />
+                </button>
 
-              {/* Image Container: 220px, rounded 14px, cover */}
-              <Link href={`/shop/${product.id}`} className="relative h-[220px] w-full rounded-[14px] overflow-hidden bg-gray-100 mb-4 block">
-                <Image 
-                  src={product.image} 
-                  alt={product.name} 
-                  fill 
-                  className="object-cover group-hover:scale-[1.05] transition-transform duration-500 ease-out" 
-                />
-              </Link>
-
-              {/* Details */}
-              <div className="flex flex-col flex-grow px-1">
-                <Link href={`/shop/${product.id}`} className="block mb-2">
-                  <h3 className="font-medium text-[16px] md:text-[16px] text-black leading-snug line-clamp-2 group-hover:text-[#024fe7] transition-colors">
-                    {product.name}
-                  </h3>
+                {/* Image */}
+                <Link href={`/shop/${product.id}`} className="relative aspect-square w-full rounded-[32px] overflow-hidden bg-gray-50 mb-6 block">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-1000"
+                  />
                 </Link>
 
-                {/* Pricing Block */}
-                <div className="mt-auto pt-2">
-                  <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
-                    <span className="font-bold text-[16px] md:text-[18px] text-gray-900">
-                      ₹{(product.price || 0).toFixed(2)}
-                    </span>
-                    {product.oldPrice && product.oldPrice > product.price && (
-                      <span className="text-[12px] md:text-[14px] text-gray-400 line-through">
-                        ₹{product.oldPrice.toFixed(2)}
-                      </span>
-                    )}
-                    {product.discount && (
-                      <span className="text-[12px] md:text-[13px] font-bold text-green-600">
-                        {product.discount}
-                      </span>
-                    )}
+                {/* Details */}
+                <div className="flex flex-col flex-grow px-1">
+                  <Link href={`/shop/${product.id}`} className="block mb-2">
+                    <h3 className="font-semibold text-[14px] md:text-[16px] text-gray-800 leading-snug line-clamp-2 group-hover:text-[#024fe7] transition-colors">
+                      {product.name}
+                    </h3>
+                  </Link>
+
+                  <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-6">
+                    <div className="flex flex-col">
+                      <span className="text-2xl font-black text-black tracking-tighter italic">₹{product.price.toLocaleString('en-IN')}</span>
+                      {product.oldPrice && (
+                        <span className="text-xs font-bold text-gray-300 line-through">₹{product.oldPrice.toLocaleString('en-IN')}</span>
+                      )}
+                    </div>
+                    <button
+                      onClick={(e) => handleAddToCart(e, product)}
+                      className="w-14 h-14 bg-[#024fe7] hover:bg-black text-white rounded-2xl flex items-center justify-center transition-all shadow-xl active:scale-95 group/btn"
+                    >
+                      <ShoppingBag size={24} className="group-hover/btn:scale-110 transition-transform" />
+                    </button>
                   </div>
                 </div>
-                
-                {/* Optional Cart Button replacing original logic to fit format */}
-                <motion.button 
-                  whileTap={{ scale: 0.95 }}
-                  onClick={(e) => handleAddToCart(e, product)}
-                  className="mt-4 w-full py-[10px] bg-gray-50 hover:bg-[#024fe7] hover:text-white text-gray-700 font-medium text-[14px] rounded-[10px] transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart size={16} />
-                  Add to Cart
-                </motion.button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
           </div>
         )}
-
-        <Link href="/shop" className="w-full mt-8 md:hidden block">
-          <button className="w-full h-[48px] bg-white text-black border-2 border-[#024FE7] font-semibold text-base rounded-[12px] flex items-center justify-center">
-            View All Products
-          </button>
-        </Link>
       </div>
     </section>
+
+      {/* Trust Section */ }
+  <section className="pb-24 pt-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {[
+          { icon: ShieldCheck, title: "Secure Payment", desc: "100% encrypted gateway settlement." },
+          { icon: RotateCcw, title: "Easy Returns", desc: "No-questions-asked retrieval protocol." },
+          { icon: Truck, title: "Quality Tested", desc: "Rigorous standards for every item." },
+          { icon: Award, title: "Safe for Kids", desc: "Certified BPA-free & non-toxic materials." }
+        ].map((trust, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            className="brand-card flex flex-col items-center text-center group"
+          >
+            <div className="w-16 h-16 bg-blue-50 rounded-[20px] flex items-center justify-center text-[#024fe7] mb-6 group-hover:bg-[#024fe7] group-hover:text-white transition-all shadow-inner">
+              <trust.icon size={28} />
+            </div>
+            <h4 className="font-black text-lg text-black mb-2 uppercase tracking-tight">{trust.title}</h4>
+            <p className="text-gray-400 text-xs font-bold">{trust.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+        )}
+
+      <Link href="/shop" className="w-full mt-8 py-3 border border-gray-200 text-center font-semibold text-gray-600 rounded-xl md:hidden block hover:bg-gray-50">
+        View All Products
+      </Link>
+    </div>
+  </section>
   );
 }
+

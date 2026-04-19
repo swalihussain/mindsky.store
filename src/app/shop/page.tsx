@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useProductStore } from '@/store/productStore';
 import { useCartStore } from '@/store/cartStore';
-import { Filter, ShoppingBag, ArrowUpRight, Search, Loader2 } from 'lucide-react';
+import { Filter, ShoppingBag, ArrowRight, Search, Loader2, Star, LayoutGrid } from 'lucide-react';
 import Link from 'next/link';
 
 function ShopContent() {
@@ -17,13 +17,11 @@ function ShopContent() {
   const [selectedAge, setSelectedAge] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
 
-  // Trigger one-time fetch on mount to ensure data is fresh
   useEffect(() => {
     fetchProducts();
     fetchCategories();
   }, [fetchProducts, fetchCategories]);
 
-  // Sync with URL params on load or change
   useEffect(() => {
     const catParam = searchParams.get('category');
     const brandParam = searchParams.get('brand');
@@ -34,7 +32,6 @@ function ShopContent() {
     if (ageParam) setSelectedAge(ageParam);
   }, [searchParams]);
 
-  // Case-Resilient Filter Logic
   const filteredProducts = products.filter(p => {
     if (selectedCategory) {
       const match = (p.category || "").toLowerCase() === selectedCategory.toLowerCase();
@@ -45,157 +42,155 @@ function ShopContent() {
     return true;
   });
 
-  // Sort products
   const sortedProducts = [...filteredProducts];
   if (sortOrder === 'price-low') {
     sortedProducts.sort((a, b) => a.price - b.price);
   } else if (sortOrder === 'price-high') {
     sortedProducts.sort((a, b) => b.price - a.price);
   } else {
-    sortedProducts.reverse(); // Newest first
+    sortedProducts.reverse();
   }
 
   const handleAddToCart = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image
-    });
+    addToCart(product);
   };
 
   return (
-    <div className="pt-32 pb-20 bg-gray-50 min-h-screen">
+    <div className="pt-32 pb-24 bg-white min-h-screen relative overflow-hidden bg-soft-blue">
+      {/* Decorative Blur */}
+      <div className="absolute top-[-5%] right-[-5%] w-64 h-64 bg-[#024fe7]/5 rounded-full blur-3xl pointer-events-none"></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="mb-12 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="mb-16 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-10">
           <div>
-            <h1 className="text-5xl font-heading font-black text-gray-900 mb-4 tracking-tighter italic">Shop All <span className="text-[#024fe7]">Gear</span></h1>
-            <p className="text-gray-500 text-lg font-medium">Discover the perfect toys, clothing, and learning tools for every age.</p>
+            <h1 className="text-6xl md:text-7xl font-black text-black tracking-tighter italic leading-none">
+              Explore <span className="text-[#024fe7]">Catalog</span>
+            </h1>
+            <p className="text-gray-400 font-bold mt-6 max-w-xl text-lg uppercase tracking-tight">
+               Discover the perfect gear for development and play, sorted by precision.
+            </p>
           </div>
-          <div className="flex items-center gap-2 text-gray-400 bg-white px-4 py-2 rounded-2xl border border-gray-100 shadow-sm self-start md:self-auto">
-             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-             <span className="text-[10px] font-black uppercase tracking-widest leading-none">Live Inventory Engine</span>
+          <div className="flex items-center gap-4 bg-white px-8 py-4 rounded-[32px] border border-blue-50 shadow-xl self-start md:self-auto">
+             <div className="relative">
+                <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                <div className="w-3 h-3 rounded-full bg-emerald-500 absolute inset-0 animate-ping"></div>
+             </div>
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-black">Live Inventory Engine</span>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-10">
-          {/* Sidebar Filters */}
-          <div className="w-full md:w-72 shrink-0 space-y-6">
-            <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm sticky top-32">
-              <h3 className="font-black flex items-center gap-3 text-lg border-b border-gray-50 pb-6 mb-8 text-[#1F2937]">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Sidebar */}
+          <div className="w-full lg:w-80 shrink-0">
+            <div className="bg-white p-10 rounded-[48px] border border-gray-50 shadow-sm sticky top-32">
+              <h3 className="font-black flex items-center gap-3 text-lg mb-10 text-black uppercase tracking-tight italic">
                 <Filter size={20} className="text-[#024fe7]"/> Master Filters
               </h3>
               
-              <div className="space-y-8">
+              <div className="space-y-10">
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 mb-3 ml-1">Collection</label>
-                  <select className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 text-[#1F2937] font-bold focus:ring-2 focus:ring-[#024fe7]/10 focus:border-[#024fe7] focus:outline-none transition-all appearance-none" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                    <option value="">All Collections</option>
-                    {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                  <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 mb-4">Department</label>
+                  <select className="w-full p-5 bg-gray-50 border-2 border-transparent rounded-[24px] font-black text-xs uppercase tracking-widest text-black focus:border-[#024fe7] outline-none transition-all appearance-none" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                    <option value="">ALL COLLECTIONS</option>
+                    {categories.map(c => <option key={c.id} value={c.name}>{c.name.toUpperCase()}</option>)}
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 mb-3 ml-1">Age Bracket</label>
-                  <select className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 text-[#1F2937] font-bold focus:ring-2 focus:ring-[#024fe7]/10 focus:border-[#024fe7] focus:outline-none transition-all appearance-none" value={selectedAge} onChange={(e) => setSelectedAge(e.target.value)}>
-                    <option value="">All Ages</option>
-                    {ages.map(a => <option key={a.id} value={a.range}>{a.range}</option>)}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 mb-3 ml-1">Manufacturer</label>
-                  <select className="w-full p-4 border border-gray-100 rounded-2xl bg-gray-50 text-[#1F2937] font-bold focus:ring-2 focus:ring-[#024fe7]/10 focus:border-[#024fe7] focus:outline-none transition-all appearance-none" value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
-                    <option value="">All Brands</option>
-                    {brands.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
+                  <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-gray-300 mb-4">Age Bracket</label>
+                  <select className="w-full p-5 bg-gray-50 border-2 border-transparent rounded-[24px] font-black text-xs uppercase tracking-widest text-black focus:border-[#024fe7] outline-none transition-all appearance-none" value={selectedAge} onChange={(e) => setSelectedAge(e.target.value)}>
+                    <option value="">ALL AGE GROUPS</option>
+                    {ages.map(a => <option key={a.id} value={a.range}>{a.range.toUpperCase()}</option>)}
                   </select>
                 </div>
 
                 <button 
                   onClick={() => {setSelectedBrand(''); setSelectedAge(''); setSelectedCategory('');}}
-                  className="w-full py-4 text-[10px] font-black uppercase tracking-widest text-gray-300 hover:text-rose-500 hover:bg-rose-50 rounded-2xl transition-all border border-transparent mt-4"
+                  className="w-full py-4 text-[10px] font-black uppercase tracking-[0.4em] text-gray-200 hover:text-rose-500 transition-all"
                 >
-                  Clear Global Filters
+                  Reset Parameters
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Product Grid */}
+          {/* Grid */}
           <div className="flex-1">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 px-2">
-              <span className="text-gray-400 font-bold text-sm tracking-tight">Active Inventory Scope: <strong className="text-[#1F2937] font-black">{sortedProducts.length} Items</strong></span>
-              <div className="flex items-center gap-4">
-                <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Order By:</span>
-                <select className="p-3 pl-4 pr-10 border border-gray-100 rounded-2xl bg-white font-bold text-[#1F2937] focus:outline-none focus:border-[#024fe7] shadow-sm appearance-none" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                  <option value="newest">Recent First</option>
-                  <option value="price-low">Price: Low - High</option>
-                  <option value="price-high">Price: High - Low</option>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6 px-4">
+              <span className="text-gray-400 font-bold text-xs uppercase tracking-widest">Scope: <strong className="text-black font-black">{sortedProducts.length} Items</strong></span>
+              <div className="flex items-center gap-4 bg-white p-2 rounded-[20px] border border-gray-50 shadow-sm">
+                <span className="text-[10px] font-black uppercase tracking-widest text-gray-300 ml-4">Sequence:</span>
+                <select className="p-3 bg-gray-50 rounded-2xl font-black text-[10px] uppercase tracking-widest text-[#024fe7] focus:outline-none border-none appearance-none" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                  <option value="newest">Latest First</option>
+                  <option value="price-low">Lowest Price</option>
+                  <option value="price-high">Highest Price</option>
                 </select>
               </div>
             </div>
 
             {isLoading ? (
-               <div className="flex flex-col items-center justify-center py-40 gap-4">
-                  <Loader2 className="w-10 h-10 text-[#024fe7] animate-spin" />
-                  <span className="text-gray-300 font-black text-xs uppercase tracking-widest">Hydrating Catalog...</span>
+               <div className="flex flex-col items-center justify-center py-40 gap-6">
+                  <Loader2 className="w-12 h-12 text-[#024fe7] animate-spin" />
+                  <span className="text-gray-300 font-black text-[10px] uppercase tracking-[0.4em]">Hydrating Master Catalog...</span>
                </div>
             ) : sortedProducts.length === 0 ? (
-              <div className="bg-white p-24 text-center rounded-[40px] border border-gray-50 shadow-sm flex flex-col items-center justify-center animate-in fade-in duration-500">
-                <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-8">
-                   <Search size={40} className="text-gray-200" />
+              <div className="bg-white p-24 text-center rounded-[60px] border border-gray-50 shadow-sm flex flex-col items-center justify-center">
+                <div className="w-24 h-24 bg-gray-50 rounded-[32px] flex items-center justify-center mb-8">
+                   <LayoutGrid size={40} className="text-gray-200" />
                 </div>
-                <h3 className="text-3xl font-black text-[#1F2937] mb-3 tracking-tighter">Scope Empty</h3>
-                <p className="text-gray-400 font-medium max-w-xs">No entries match your current filter parameters. Try expanding your search bracket.</p>
+                <h3 className="text-4xl font-black text-black mb-4 tracking-tighter italic">Scope <span className="text-[#024fe7]">Empty</span></h3>
+                <p className="text-gray-400 font-bold uppercase text-[10px] tracking-widest leading-relaxed">Try expanding your exploration parameters.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {sortedProducts.map((product) => (
-                  <div key={product.id} className="bg-white rounded-[32px] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all hover:-translate-y-2 group flex flex-col h-full relative cursor-pointer animate-in slide-in-from-bottom-4 duration-500">
-                    {/* Badges */}
-                    <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-                      {product.badges?.map(badge => (
-                        <span key={badge} className={`text-[9px] font-black uppercase tracking-[0.15em] px-3 py-1.5 rounded-full ${badge.includes('OFF') || badge === 'Sale' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-[#FFD966] text-amber-900 shadow-lg shadow-amber-100'}`}>{badge}</span>
-                      ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                {sortedProducts.map((product, index) => (
+                  <motion.div 
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="group relative flex flex-col h-full bg-white rounded-[40px] border border-gray-50 p-4 transition-all duration-500 hover:border-[#024fe7] hover:shadow-[0_20px_50px_-20px_rgba(2,79,231,0.2)]"
+                  >
+                    <div className="absolute top-8 left-8 z-10">
+                      {product.discountPrice && (
+                         <span className="bg-[#024fe7] text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Special Offer</span>
+                      )}
                     </div>
-
-                    <div className="aspect-square bg-gray-50 relative overflow-hidden">
+                    
+                    <Link href={`/shop/${product.id}`} className="relative aspect-square w-full rounded-[32px] overflow-hidden bg-gray-50 mb-6 block">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                    </div>
+                    </Link>
 
-                    <div className="p-8 flex flex-col flex-1">
-                      <div className="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em] mb-3 leading-none italic">{product.brand || 'Premium Selection'}</div>
-                      <h3 className="font-heading font-black text-xl text-[#1F2937] leading-tight mb-6 group-hover:text-[#024fe7] transition-colors">{product.name}</h3>
-                      <div className="mt-auto flex items-center justify-between">
+                    <div className="px-2 flex flex-col flex-1">
+                      <div className="flex items-center gap-1 mb-4 text-[#024fe7]">
+                         {[...Array(5)].map((_, i) => <Star key={i} size={14} className="fill-[#024fe7]" />)}
+                      </div>
+                      <h3 className="font-black text-xl text-black leading-tight mb-6 line-clamp-2 group-hover:text-[#024fe7] transition-colors uppercase italic tracking-tighter">{product.name}</h3>
+                      
+                      <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-6">
                         <div className="flex flex-col">
-                          {product.oldPrice ? (
-                            <>
-                              <span className="text-2xl font-black text-[#1F2937] leading-none">₹{product.price.toFixed(2)}</span>
-                              <span className="text-xs font-bold text-gray-300 line-through mt-1.5 opacity-60">₹{product.oldPrice.toFixed(2)}</span>
-                            </>
-                          ) : (
-                            <span className="text-2xl font-black text-[#1F2937] leading-none">₹{product.price.toFixed(2)}</span>
-                          )}
+                          <span className="text-2xl font-black text-black tracking-tighter italic">₹{product.price.toLocaleString('en-IN')}</span>
+                          {product.oldPrice && <span className="text-[10px] font-bold text-gray-300 line-through">₹{product.oldPrice.toLocaleString('en-IN')}</span>}
                         </div>
-                        <button onClick={(e) => handleAddToCart(e, product)} className="w-14 h-14 rounded-2xl bg-[#1F2937] flex items-center justify-center text-white hover:bg-[#024fe7] hover:scale-110 transition-all shadow-xl active:scale-95">
+                        <button onClick={(e) => handleAddToCart(e, product)} className="w-14 h-14 bg-[#024fe7] hover:bg-black text-white rounded-2xl flex items-center justify-center transition-all shadow-xl active:scale-95">
                           <ShoppingBag size={24} />
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}
             
-            {/* Pagination */}
+            {/* Nav */}
             {sortedProducts.length > 0 && (
-              <div className="mt-20 flex justify-center pb-10">
-                <div className="flex gap-3">
-                  <button className="px-6 py-3 border border-gray-100 rounded-2xl bg-white text-gray-300 font-black text-[11px] uppercase tracking-widest disabled:opacity-30">Prev</button>
-                  <button className="px-6 py-3 bg-[#1F2937] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-xl">01</button>
-                  <button className="px-6 py-3 border border-gray-100 rounded-2xl bg-white text-gray-300 font-black text-[11px] uppercase tracking-widest disabled:opacity-30">Next</button>
+              <div className="mt-24 flex justify-center pb-20">
+                <div className="flex items-center gap-3 bg-white p-3 rounded-[32px] border border-gray-50 shadow-xl">
+                  <button className="w-12 h-12 flex items-center justify-center text-gray-200 font-black italic disabled:opacity-30">«</button>
+                  <button className="px-8 py-3 bg-[#024fe7] text-white rounded-2xl font-black text-[10px] uppercase tracking-widest">Sequence 01</button>
+                  <button className="w-12 h-12 flex items-center justify-center text-gray-200 font-black italic disabled:opacity-30">»</button>
                 </div>
               </div>
             )}
@@ -208,8 +203,9 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <Suspense fallback={<div className="pt-32 text-center text-gray-300 font-black uppercase tracking-[0.2em] animate-pulse">Initializing Portal...</div>}>
+    <Suspense fallback={<div className="pt-40 text-center text-gray-200 font-black uppercase tracking-[0.4em] animate-pulse">Initializing Portal...</div>}>
       <ShopContent />
     </Suspense>
   );
 }
+
