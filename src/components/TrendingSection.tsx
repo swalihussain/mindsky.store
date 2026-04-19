@@ -8,9 +8,7 @@ import { Heart, ShoppingCart } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { useProductStore } from '@/store/productStore';
 
-// Component for displaying dynamic database products on the homepage
-
-export default function ProductSection() {
+export default function TrendingSection() {
   const { products, fetchProducts, isLoading } = useProductStore();
   const addItem = useCartStore((state) => state.addItem);
 
@@ -18,10 +16,9 @@ export default function ProductSection() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Take the latest 8 products, preferring Name Slips for the Featured Section
+  // Exclude Name Slips and display other school-related/trending products
   const displayProducts = products
-    .filter(p => p.category === 'Name Slips')
-    .concat(products.filter(p => p.category !== 'Name Slips')) // Fallback if no Name Slips
+    .filter(p => p.category !== 'Name Slips')
     .slice(0, 8);
 
   const handleAddToCart = (e: React.MouseEvent, product: any) => {
@@ -33,23 +30,23 @@ export default function ProductSection() {
     return (
       <div className="py-24 flex flex-col items-center justify-center gap-4 text-[#1F2937]/20 bg-gray-50/30">
         <div className="w-10 h-10 border-4 border-current border-t-transparent rounded-full animate-spin"></div>
-        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Curating Favorites...</span>
+        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Curating Trends...</span>
       </div>
     );
   }
 
   return (
-    <section className="py-[48px] bg-gray-50">
+    <section className="py-16 md:py-24 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-[16px] md:mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-[22px] md:text-4xl font-bold text-black tracking-tight leading-tight">
-              MindSky Best Moving Product
+            <h2 className="text-[24px] md:text-4xl font-bold text-gray-900 tracking-tight">
+              Back to School Trending
             </h2>
           </motion.div>
           <Link href="/shop" className="text-[#024fe7] font-semibold hover:underline hidden md:block">
@@ -58,8 +55,8 @@ export default function ProductSection() {
         </div>
 
         {displayProducts.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-[32px] border border-dashed border-gray-200">
-             <p className="text-gray-400 font-bold italic">"We're curating new arrivals! Check back soon for exciting toys & gear."</p>
+          <div className="text-center py-20 bg-gray-50 rounded-[32px] border border-dashed border-gray-200">
+             <p className="text-gray-400 font-bold italic">"We're curating trending school essentials! Check back soon."</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-6">
@@ -70,21 +67,16 @@ export default function ProductSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
-              className="bg-white rounded-[14px] p-4 shadow-sm transition-all duration-300 group flex flex-col relative"
+              className="bg-white rounded-[16px] p-[12px] shadow-sm hover:shadow-md hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 group flex flex-col relative border border-gray-100"
             >
               {/* Badges Container */}
               <div className="absolute top-5 left-5 z-10 flex flex-col gap-1.5">
-                <span className="bg-[#FFD966] text-black text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
-                  Best Seller
+                <span className="bg-[#FF4D4D] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
+                  Trending
                 </span>
                 {product.isNew && (
                   <span className="bg-[#024FE7] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
                     New
-                  </span>
-                )}
-                {product.isSale && (
-                  <span className="bg-[#FF4D4D] text-white text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide inline-block shadow-sm">
-                    Sale
                   </span>
                 )}
               </div>
@@ -107,8 +99,8 @@ export default function ProductSection() {
               {/* Details */}
               <div className="flex flex-col flex-grow px-1">
                 <Link href={`/shop/${product.id}`} className="block mb-2">
-                  <h3 className="font-medium text-[16px] md:text-[16px] text-black leading-snug line-clamp-2 group-hover:text-[#024fe7] transition-colors">
-                    {product.name}
+                  <h3 className="font-semibold text-[14px] md:text-[16px] text-gray-800 leading-snug line-clamp-2 group-hover:text-[#024fe7] transition-colors">
+                     {product.name}
                   </h3>
                 </Link>
 
@@ -131,7 +123,6 @@ export default function ProductSection() {
                   </div>
                 </div>
                 
-                {/* Optional Cart Button replacing original logic to fit format */}
                 <motion.button 
                   whileTap={{ scale: 0.95 }}
                   onClick={(e) => handleAddToCart(e, product)}
@@ -146,10 +137,8 @@ export default function ProductSection() {
           </div>
         )}
 
-        <Link href="/shop" className="w-full mt-8 md:hidden block">
-          <button className="w-full h-[48px] bg-white text-black border-2 border-[#024FE7] font-semibold text-base rounded-[12px] flex items-center justify-center">
-            View All Products
-          </button>
+        <Link href="/shop" className="w-full mt-8 py-3 border border-gray-200 text-center font-semibold text-gray-600 rounded-xl md:hidden block hover:bg-gray-50">
+          View All Products
         </Link>
       </div>
     </section>

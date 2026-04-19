@@ -71,28 +71,21 @@ export default function ReviewSection() {
   }
 
   return (
-    <section className="py-32 px-4 bg-gray-50/50 relative overflow-hidden">
+    <section className="py-[48px] px-4 bg-gray-50/50 relative overflow-hidden">
       
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#024fe7] rounded-full blur-[160px] opacity-[0.03] -translate-y-1/2 translate-x-1/2"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
         
-        <div className="flex flex-col items-center text-center mb-20">
-           <motion.div 
-             initial={{ opacity: 0, scale: 0.8 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             className="bg-emerald-50 text-emerald-500 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-8 flex items-center gap-3 border border-emerald-100 shadow-sm"
-           >
-              <Heart size={14} className="fill-emerald-500" /> Community Sentiment
-           </motion.div>
-           <h2 className="text-6xl md:text-7xl font-black text-[#1F2937] tracking-tighter italic mb-4">Real <span className="text-[#024fe7]">Voice.</span></h2>
-           <p className="text-gray-400 font-bold max-w-xl mx-auto italic leading-relaxed opacity-60">Verified testimonials from our global ecosystem of parents and explorers.</p>
+        <div className="flex flex-col items-center text-center mb-[24px] md:mb-20 px-4">
+           <h2 className="text-[26px] md:text-7xl font-bold text-black tracking-tighter mb-4">Real <span className="text-[#024fe7]">Voice</span></h2>
+           <p className="text-[#555555] font-normal text-[16px] max-w-xl mx-auto leading-relaxed">Verified testimonials from our parents and explorers.</p>
            
            <button 
              onClick={() => setIsModalOpen(true)}
-             className="mt-12 bg-[#1F2937] text-white px-10 py-5 rounded-[24px] font-black text-xs uppercase tracking-widest flex items-center gap-3 hover:bg-[#024fe7] transition-all shadow-xl active:scale-95 group"
+             className="mt-8 bg-[#024FE7] text-white w-full sm:w-auto px-10 h-[48px] rounded-[12px] font-semibold text-base transition-all flex items-center justify-center p-[14px]"
            >
-              <Plus size={18} className="group-hover:rotate-90 transition-transform"/> Write My Experience
+              Write My Experience
            </button>
         </div>
 
@@ -106,7 +99,7 @@ export default function ReviewSection() {
                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: idx * 0.15, duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="bg-white p-12 rounded-[56px] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.02)] relative group hover:shadow-[0_40px_80px_rgba(0,0,0,0.05)] hover:-translate-y-3 transition-all duration-1000 overflow-hidden flex flex-col min-h-[440px]"
+                    className="bg-white p-6 md:p-12 rounded-[14px] border border-gray-100 shadow-sm relative group transition-all duration-300 flex flex-col min-h-[300px]"
                   >
                      <div className="absolute -top-12 -right-12 opacity-[0.03] rotate-12 group-hover:rotate-0 transition-transform duration-1000 pointer-events-none">
                         <Quote size={280} />

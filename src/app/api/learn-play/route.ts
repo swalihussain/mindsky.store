@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -26,7 +25,7 @@ export async function POST(req: Request) {
     };
 
     db.learn_play[type] = [newItem, ...db.learn_play[type]];
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: newItem });
   } catch (error) {
@@ -44,7 +43,7 @@ export async function PUT(req: Request) {
     if (index === -1) return NextResponse.json({ success: false, error: "Entry not found" }, { status: 404 });
 
     db.learn_play[type][index] = { ...db.learn_play[type][index], ...updates };
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: db.learn_play[type][index] });
   } catch (error) {
@@ -62,7 +61,7 @@ export async function DELETE(req: Request) {
     if (!type || !db.learn_play[type]) return NextResponse.json({ success: false, error: "Invalid type" }, { status: 400 });
 
     db.learn_play[type] = db.learn_play[type].filter((item: any) => item.id !== id);
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, message: "Entry retired." });
   } catch (error) {

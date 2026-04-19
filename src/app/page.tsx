@@ -4,6 +4,8 @@ import ProductSection from "@/components/ProductSection";
 import LearnPlaySection from "@/components/LearnPlaySection";
 import ReviewSection from "@/components/ReviewSection";
 import WhatsAppSection from "@/components/WhatsAppSection";
+import TrendingSection from "@/components/TrendingSection";
+import TrustSection from "@/components/TrustSection";
 
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 
@@ -15,6 +17,7 @@ export default function Home() {
           <HeroSection />
           <CategorySection />
           <ProductSection />
+          <TrustSection />
           <LearnPlaySection />
           <ReviewSection />
           <WhatsAppSection />

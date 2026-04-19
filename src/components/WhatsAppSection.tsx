@@ -28,26 +28,21 @@ export default function WhatsAppSection() {
   const waLink = `https://wa.me/${settings.number}?text=${message}`;
 
   return (
-    <section className="py-24 px-4 bg-gray-50/50 relative overflow-hidden">
-      {/* Background Pattern Simulation */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none grayscale">
-         <div className="w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat"></div>
-      </div>
-
+    <section className="py-[48px] px-4 bg-gray-50/50 relative overflow-hidden">
       <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center text-center">
          
          <motion.div 
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
-           className="flex items-center gap-6 mb-10"
+           className="flex flex-col items-center gap-4 mb-8"
          >
-            <h2 className="text-5xl md:text-7xl font-black text-[#1F2937] tracking-tighter italic">
+            <div className="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-lg">
+               <MessageCircle size={28} className="fill-white" />
+            </div>
+            <h2 className="text-[26px] md:text-6xl font-bold text-black tracking-tight leading-tight">
               Order With <span className="text-[#25D366]">WhatsApp</span>
             </h2>
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-xl animate-bounce">
-               <MessageCircle size={32} className="md:size-40 fill-white" />
-            </div>
          </motion.div>
 
          <motion.a 
@@ -56,16 +51,14 @@ export default function WhatsAppSection() {
            rel="noopener noreferrer"
            initial={{ opacity: 0, scale: 0.9 }}
            whileInView={{ opacity: 1, scale: 1 }}
-           whileHover={{ scale: 1.05 }}
-           whileTap={{ scale: 0.95 }}
            viewport={{ once: true }}
-           className="bg-[#25D366] hover:bg-[#128C7E] text-white px-12 py-6 rounded-full font-black text-xl md:text-2xl flex items-center gap-4 shadow-[0_20px_40px_rgba(37,211,102,0.2)] transition-all group outline-none"
+           className="w-full sm:w-auto bg-[#25D366] text-white px-10 h-[48px] rounded-[12px] font-semibold text-base flex items-center justify-center gap-2 shadow-sm transition-all py-[14px]"
          >
             {settings.button_text} 
-            <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
+            <ArrowRight size={18} />
          </motion.a>
 
-         <p className="mt-10 text-gray-400 font-bold italic text-sm">
+         <p className="mt-8 text-[#555555] font-normal text-[14px] max-w-xs mx-auto leading-relaxed">
             Immediate assistance • Direct expert support • Personal shopping experience
          </p>
       </div>

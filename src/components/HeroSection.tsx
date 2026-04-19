@@ -40,10 +40,10 @@ export default function HeroSection() {
   const defaultImage = "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=1920&h=800&fit=crop&fm=webp";
 
   return (
-    <section className="w-full bg-white flex flex-col items-center pt-[100px] pb-[40px]">
+    <section className="w-full bg-white flex flex-col items-center pt-[100px] pb-[48px]">
       
       <motion.div 
-        className="w-[90%] max-w-5xl h-[240px] md:h-[480px] rounded-[48px] shadow-2xl hover:shadow-[#024fe7]/20 transition-all duration-1000 overflow-hidden relative border-4 border-white isolate"
+        className="w-full md:w-[90%] max-w-5xl h-[240px] md:h-[480px] rounded-[16px] md:rounded-[48px] shadow-2xl hover:shadow-[#024fe7]/20 transition-all duration-1000 overflow-hidden relative border-4 border-white isolate mx-auto"
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -95,37 +95,57 @@ export default function HeroSection() {
         )}
       </motion.div>
 
-      <div className="w-[90%] max-w-4xl mx-auto flex flex-col items-center text-center mt-12 px-4">
+      <div className="w-full max-w-4xl mx-auto flex flex-col items-center text-center mt-8 md:mt-12 px-4">
         <motion.h1 
-          className="text-5xl md:text-6xl lg:text-7xl font-black text-[#1F2937] leading-[1.1] tracking-tighter italic"
+          className="text-[26px] md:text-5xl lg:text-7xl font-bold text-black leading-[1.3] tracking-tight max-w-[320px] md:max-w-none"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {data.hero_title || "Fun, Fashion & Learning for Every Kid"}
+          {data.hero_title || "Smart Name Labels & School Essentials for Kids"}
         </motion.h1>
         
         <motion.p 
-          className="text-lg md:text-xl text-gray-500 font-bold leading-relaxed max-w-3xl mt-8 opacity-80"
+          className="text-[16px] md:text-xl text-[#555555] font-normal leading-[1.5] max-w-[300px] md:max-w-3xl mt-[16px] md:mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          {data.hero_subtitle || "Discover play-tested, parent-approved gear from toys to trendy clothing at MindSky.store!"}
+          {data.hero_subtitle || "Make school time fun, organized, and stylish."}
         </motion.p>
 
         <motion.div 
-          className="w-full flex justify-center mt-12"
+          className="w-full flex flex-col sm:flex-row justify-center items-center gap-[12px] mt-[24px] md:mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <Link href={data.hero_link || "/shop"} className="group relative">
-            <div className="absolute inset-x-0 bottom-0 h-2 bg-[#1F2937]/10 rounded-full blur-xl group-hover:bg-[#024fe7]/20 transition-all"></div>
-            <button className="relative px-12 h-20 bg-[#1F2937] hover:bg-[#024fe7] text-white font-black text-xl rounded-full shadow-2xl transition-all flex items-center justify-center gap-4 group-hover:-translate-y-2 group-active:scale-95 border-4 border-white/5 tracking-tight uppercase">
-               {data.hero_button_text || "ENTER STORE"}
+          <Link href="/shop?category=Name%20Slips" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-6 h-[48px] md:h-16 bg-[#024FE7] text-white font-semibold text-base rounded-[12px] transition-all flex items-center justify-center py-[14px]">
+               {data.hero_button_text || "Shop Name Slips"}
             </button>
           </Link>
+
+          <Link href="/shop" className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-6 h-[48px] md:h-16 bg-white text-black border-2 border-[#024FE7] font-semibold text-base rounded-[12px] transition-all flex items-center justify-center py-[14px]">
+               Explore School Essentials
+            </button>
+          </Link>
+        </motion.div>
+
+        {/* Hero Trust Badges */}
+        <motion.div
+          className="grid grid-cols-2 w-full sm:flex sm:flex-wrap justify-center items-center gap-[8px] mt-10 md:mt-14 px-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          {["Waterproof Labels", "Kid Safe", "Long Lasting", "Premium Print"].map((badge, idx) => (
+            <div key={idx} className="flex items-center justify-center gap-2 bg-white px-[8px] py-[8px] rounded-[20px] border border-gray-100 w-full sm:w-auto h-[40px] shadow-sm">
+              <div className="w-2 h-2 rounded-full bg-[#024FE7] shrink-0"></div>
+              <span className="text-[13px] md:text-base font-medium text-[#555555] truncate">{badge}</span>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

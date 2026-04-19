@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Package, TrendingUp, Users, DollarSign, Store, AlertCircle, ShoppingBag, Loader2, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
-import AdminDashboardWrapper from "@/components/admin/AdminDashboard";
 
 export default function AdminDashboard() {
   const [metrics, setMetrics] = useState<any>(null);
@@ -40,29 +39,29 @@ export default function AdminDashboard() {
   );
 
   return (
-    <AdminDashboardWrapper activeTab="dashboard">
+    <>
       <div className="max-w-7xl mx-auto w-full animate-in fade-in duration-500">
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex justify-between items-center mb-6 lg:mb-10">
           <div>
-            <h2 className="text-4xl font-black text-[#1F2937] tracking-tighter">Control Center</h2>
-            <p className="text-gray-400 mt-1 font-medium italic">Comprehensive oversight of your e-commerce ecosystem.</p>
+            <h2 className="text-[24px] md:text-3xl lg:text-4xl font-black text-[#1F2937] tracking-tighter">Control Center</h2>
+            <p className="text-gray-400 mt-1 text-xs md:text-sm font-medium italic">Comprehensive oversight of your e-commerce ecosystem.</p>
           </div>
-          <button onClick={fetchStats} className="p-3 bg-white border border-gray-100 rounded-2xl text-gray-300 hover:text-[#024fe7] hover:bg-blue-50 transition-all shadow-sm">
+          <button onClick={fetchStats} className="p-3 bg-white border border-gray-100 rounded-2xl text-gray-300 hover:text-[#024fe7] hover:bg-blue-50 transition-all shadow-sm shrink-0">
              <RefreshCw size={20} />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-8 lg:mb-12">
           {statsCards.map((stat, index) => (
-            <div key={index} className="bg-white p-8 rounded-[32px] border border-gray-50 shadow-sm flex flex-col group hover:shadow-xl transition-all hover:-translate-y-1">
+            <div key={index} className="bg-white p-6 lg:p-8 rounded-[24px] lg:rounded-[32px] border border-gray-50 shadow-sm flex flex-col group hover:shadow-xl transition-all lg:hover:-translate-y-1 w-full">
               <div className="flex justify-between items-start mb-6">
                 <div className={`p-4 rounded-2xl ${stat.color} transition-all group-hover:scale-110`}>
                   <stat.icon size={28} />
                 </div>
                 <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${stat.color} border border-white/50`}>{stat.trend}</span>
               </div>
-              <h3 className="text-gray-400 text-[11px] font-black uppercase tracking-[0.2em] mb-2">{stat.title}</h3>
-              <p className="text-3xl font-black text-[#1F2937] tracking-tighter">{stat.value}</p>
+              <h3 className="text-gray-400 text-[10px] lg:text-[11px] font-black uppercase tracking-[0.2em] mb-2">{stat.title}</h3>
+              <p className="text-[24px] lg:text-3xl font-black text-[#1F2937] tracking-tighter">{stat.value}</p>
             </div>
           ))}
         </div>
@@ -152,6 +151,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-    </AdminDashboardWrapper>
+    </>
   );
 }

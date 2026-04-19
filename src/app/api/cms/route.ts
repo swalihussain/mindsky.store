@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { readDB } from "@/lib/db";
-import { promises as fs } from 'fs';
+import { readDB, writeDB } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -17,7 +16,7 @@ export async function POST(req: Request) {
     const db = await readDB();
     
     db.cms = { ...db.cms, ...body };
-    await fs.writeFile('local_database.json', JSON.stringify(db, null, 2));
+    writeDB(db);
 
     return NextResponse.json({ success: true, data: db.cms });
   } catch (error) {

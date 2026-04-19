@@ -17,8 +17,11 @@ import {
   Mail,
   Box,
   BarChart3,
-  ShieldCheck
+  ShieldCheck,
+  Menu,
+  X
 } from "lucide-react";
+import { useState } from "react";
 
 export default function AdminLayout({
   children,
@@ -27,6 +30,7 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   // Skip sidebar for login page
   if (pathname === '/admin/login') {
@@ -64,14 +68,29 @@ export default function AdminLayout({
   const menuItems = allMenuItems.filter(item => item.roles.includes(currentUser.role));
 
   return (
-    <div className="flex min-h-screen bg-[#F9FAFB]">
+    <div className="flex min-h-screen bg-[#F9FAFB] relative">
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[100] lg:hidden backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-80 bg-[#1F2937] text-white flex flex-col shadow-2xl relative z-50 shrink-0 h-screen sticky top-0">
-        <div className="p-10 border-b border-white/5">
-          <Link href="/" className="flex flex-col">
+      <aside className={`
+        fixed inset-y-0 left-0 w-[80%] lg:w-80 bg-[#1F2937] text-white flex flex-col shadow-2xl z-[101] shrink-0 h-screen lg:sticky lg:top-0
+        transition-transform duration-300 ease-in-out lg:translate-x-0
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        <div className="p-10 border-b border-white/5 flex justify-between items-center">
+          <Link href="/" className="flex flex-col" onClick={() => setIsSidebarOpen(false)}>
             <span className="text-2xl font-black italic tracking-tighter text-[#024fe7]">MindSky<span className="text-white">.Admin</span></span>
             <span className="text-[9px] font-black uppercase tracking-[0.4em] text-gray-500 mt-2">Enterprise Ecosystem</span>
           </Link>
+          <button className="lg:hidden text-gray-400" onClick={() => setIsSidebarOpen(false)}>
+            <X size={24} />
+          </button>
         </div>
 
         <nav className="flex-1 py-10 px-4 space-y-2 overflow-y-auto custom-scrollbar">
@@ -81,6 +100,7 @@ export default function AdminLayout({
               <Link 
                 key={item.id} 
                 href={item.path}
+                onClick={() => setIsSidebarOpen(false)}
                 className={`flex items-center justify-between px-6 py-4 rounded-[20px] transition-all duration-300 group ${
                   isActive 
                   ? 'bg-[#024fe7] text-white shadow-lg shadow-[#024fe7]/20 scale-[1.02]' 
@@ -105,11 +125,17 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-h-screen overflow-hidden relative">
-        <header className="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-12 sticky top-0 z-40 backdrop-blur-md bg-white/80 shrink-0">
+      <main className="flex-1 flex flex-col min-h-screen overflow-hidden relative w-full">
+        <header className="h-20 lg:h-24 bg-white border-b border-gray-100 flex items-center justify-between px-4 lg:px-12 sticky top-0 z-40 backdrop-blur-md bg-white/80 shrink-0">
            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-[#024fe7] font-black text-xs shadow-inner">MS</div>
-              <span className="font-black text-[#1F2937] text-xs uppercase tracking-widest">Active Session: Explorer-01</span>
+              <button 
+                className="lg:hidden p-2 text-gray-500 hover:bg-gray-50 rounded-xl"
+                onClick={() => setIsSidebarOpen(true)}
+              >
+                <Menu size={24} />
+              </button>
+              <div className="w-8 h-8 lg:w-10 lg:h-10 bg-blue-50 rounded-full flex items-center justify-center text-[#024fe7] font-black text-[10px] lg:text-xs shadow-inner">MS</div>
+              <span className="font-black text-[#1F2937] text-[10px] lg:text-xs uppercase tracking-widest hidden sm:inline-block">Active Session: Explorer-01</span>
            </div>
            
            <div className="flex items-center gap-8">
@@ -123,7 +149,7 @@ export default function AdminLayout({
            </div>
         </header>
 
-        <div className="p-12 flex-1 overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div className="p-4 lg:p-12 flex-1 overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
           {children}
         </div>
       </main>

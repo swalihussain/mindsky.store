@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart, Menu, Search, Heart } from 'lucide-react';
+import { ShoppingCart, Menu, Search, Heart, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
@@ -56,7 +56,7 @@ export default function Navbar() {
               {isMounted && cartCount > 0 && <span className="absolute -top-2 -right-2 bg-[var(--color-highlight)] text-[var(--color-foreground)] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-sm">{cartCount}</span>}
             </Link>
             <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-[var(--color-secondary)] focus:outline-none">
-              <Menu size={28} />
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
