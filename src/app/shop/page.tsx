@@ -6,6 +6,7 @@ import { useProductStore } from '@/store/productStore';
 import { useCartStore } from '@/store/cartStore';
 import { Filter, ShoppingBag, ArrowRight, Search, Loader2, Star, LayoutGrid } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from "framer-motion";
 
 function ShopContent() {
   const searchParams = useSearchParams();
