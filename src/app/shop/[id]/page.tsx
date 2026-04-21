@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Star, Truck, Shield, ArrowLeft, ShoppingBag, Heart, Minus, Plus, BadgeCheck, RotateCcw } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
